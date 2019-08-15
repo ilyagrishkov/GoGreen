@@ -1,0 +1,39 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+
+#solarpanel,
+#roomtemp,
+#price,
+#done,
+#close,
+#details,
+#lblgreenenergy {
+    -fx-font-family: "Marker";
+}
+
+#solarpanel,
+#roomtemp,
+#lblgreenenergy {
+
+    -fx-font-size: 15;
+}
+
+#price {
+
+    -fx-font-size: 25;
+}
+
+
+#done,
+#close {
+
+    -fx-font-size: 20;
+}
+
+#details {
+
+    -fx-font-size: 30;
+    -fx-text-fill: #61b73a;
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserAchievementsCompositeKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server.envy.me.userachievements</a> &gt; <span class="el_source">UserAchievementsCompositeKey.java</span></div><h1>UserAchievementsCompositeKey.java</h1><pre class="source lang-java linenums">package server.envy.me.userachievements;
+
+import java.io.Serializable;
+
+public class UserAchievementsCompositeKey implements Serializable {
+
+    private int userId;
+    private int achievementsId;
+
+<span class="nc" id="L10">    public UserAchievementsCompositeKey(int userId, int achievementsId) {</span>
+<span class="nc" id="L11">        this.userId = userId;</span>
+<span class="nc" id="L12">        this.achievementsId = achievementsId;</span>
+<span class="nc" id="L13">    }</span>
+
+<span class="nc" id="L15">    public UserAchievementsCompositeKey() {}</span>
+
+    public int getUserId() {
+<span class="nc" id="L18">        return userId;</span>
+    }
+
+    public void setUserId(int userId) {
+<span class="nc" id="L22">        this.userId = userId;</span>
+<span class="nc" id="L23">    }</span>
+
+    public int getAchievementsId() {
+<span class="nc" id="L26">        return achievementsId;</span>
+    }
+
+    public void setAchievementsId(int achievementsId) {
+<span class="nc" id="L30">        this.achievementsId = achievementsId;</span>
+<span class="nc" id="L31">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

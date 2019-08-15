@@ -1,0 +1,4 @@
+rootProject.name = 'gogreen'
+include 'client'
+include 'server'
+

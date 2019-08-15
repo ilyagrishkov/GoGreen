@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoginService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server.envy.me.login</a> &gt; <span class="el_source">LoginService.java</span></div><h1>LoginService.java</h1><pre class="source lang-java linenums">package server.envy.me.login;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+<span class="fc" id="L10">public class LoginService {</span>
+
+    @Autowired
+    private LoginRepository loginRepository;
+
+    /**
+     * Returns all useracc instances in the database.
+     * @return an iterable list of all the Login instances on the database
+     */
+    public List&lt;LoginClass&gt; getAllLogins() {
+<span class="nc" id="L20">        List&lt;LoginClass&gt; result = new ArrayList&lt;LoginClass&gt;();</span>
+<span class="nc" id="L21">        loginRepository.findAll().forEach(result::add);</span>
+<span class="nc" id="L22">        return result;</span>
+    }
+
+    /**
+     * The method queries the database finding user by username.
+     * @param id of the user to find Login Info.
+     * @return the LoginClass containing username and password
+     */
+    public LoginClass getLogin(int id) {
+<span class="nc" id="L31">        return loginRepository.findById(id);</span>
+    }
+
+    /**
+     * Find user in database by username.
+     * @param username of the user to retrieve login information about
+     * @return instance of LoginClass
+     */
+    public LoginClass getLoginByUsername(String username) {
+<span class="nc" id="L40">        return loginRepository.findByUsername(username);</span>
+    }
+
+    /**
+     * Deletes User from database given username as a String.
+     * @param username of the user to delete
+     */
+    public void deleteByUsername(String username) {
+<span class="nc" id="L48">        int id = loginRepository.findByUsername(username).getId();</span>
+<span class="nc" id="L49">        loginRepository.deleteById(id);</span>
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

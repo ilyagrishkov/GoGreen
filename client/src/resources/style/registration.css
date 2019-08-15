@@ -1,0 +1,80 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+* {
+    -fx-font-family: "Marker";
+}
+
+#txtUsername,
+#txtFirstname,
+#txtLastname,
+#txtPassword,
+#txtRepassword {
+
+    -fx-font-size: 20;
+}
+
+#txtUsername,
+#txtFirstname,
+#txtLastname,
+#txtPassword,
+#txtRepassword,
+#cbGender,
+#cbDay,
+#cbMonth,
+#cbYear {
+
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #61b73a;
+    -fx-border-width: 2;
+}
+
+#cbGender,
+#cbDay,
+#cbMonth,
+#cbYear {
+
+    -fx-background-color: null;
+    -fx-font-size: 12pt;
+    -fx-font-family: 'Marker Felt';
+    -fx-padding: 0;
+}
+
+#registerButton {
+    -fx-background-color: null;
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-border-width: 3;
+    -fx-padding: 0;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-min-width: 100;
+    -fx-min-height: 100;
+    -fx-max-height: 100;
+    -fx-max-width: 100;
+    -fx-font-size: 28;
+}
+
+#registerButton:hover {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#registerButton:pressed {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-scale-y: 0.99;
+    -fx-scale-x: 0.99;
+}
+
+#registerButton:focused {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#registerButton:hover:focused {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}

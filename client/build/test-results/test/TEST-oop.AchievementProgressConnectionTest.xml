@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.AchievementProgressConnectionTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:14:59" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.061">
+  <properties/>
+  <testcase name="test_getAchievementProgress_IOException" classname="oop.AchievementProgressConnectionTest" time="0.023"/>
+  <testcase name="test_setAchievementProgress_null" classname="oop.AchievementProgressConnectionTest" time="0.016"/>
+  <testcase name="test_getAchievementProgress_invalid" classname="oop.AchievementProgressConnectionTest" time="0.003"/>
+  <testcase name="test_setAchievementProgress_invalid" classname="oop.AchievementProgressConnectionTest" time="0.006"/>
+  <testcase name="test_getAchievementProgress_valid" classname="oop.AchievementProgressConnectionTest" time="0.003"/>
+  <testcase name="test_getAchievementProgress_null" classname="oop.AchievementProgressConnectionTest" time="0.003"/>
+  <testcase name="test_setAchievementProgress_valid" classname="oop.AchievementProgressConnectionTest" time="0.003"/>
+  <testcase name="test_setAchievementProgress_IOException" classname="oop.AchievementProgressConnectionTest" time="0.003"/>
+  <system-out><![CDATA[{"name":"name","description":"description","id":1}
+100
+{"name":"name","description":"description","id":1}
+{"name":"name","description":"description","id":1}
+{"name":"name","description":"description","id":1}
+{"name":"name","description":"description","id":1}
+100
+{"name":"name","description":"description","id":1}
+{"name":"name","description":"description","id":1}
+{"name":"name","description":"description","id":1}
+]]></system-out>
+  <system-err><![CDATA[Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+WARNING: oop.connection.Connection: IOException - GET to Server - Retrieving achievement progress
+]]></system-err>
+</testsuite>

@@ -1,0 +1,6 @@
+Mar 17, 2019 1:59:04 AM oop.App main
+INFO: Start of the Client Log
+Mar 17, 2019 1:59:04 AM oop.App log
+INFO: oop.gui.LoginWindow: Reached the Login Window
+Mar 17, 2019 1:59:05 AM oop.App log
+INFO: oop.gui.LoginWindow: End of login window

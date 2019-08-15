@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.SettingsDetailsTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:15:01" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.006">
+  <properties/>
+  <testcase name="equalsNotSameElectricityEmmTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="constructorTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="constructorNoIdTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="equalsNullTest" classname="oop.SettingsDetailsTest" time="0.001"/>
+  <testcase name="parseTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="failedStringifyTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="equalsNotSameLivingTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="equalsOtherTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="failedParseTest" classname="oop.SettingsDetailsTest" time="0.001"/>
+  <testcase name="equalsNotSameNatGasTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="stringifyTest" classname="oop.SettingsDetailsTest" time="0.001"/>
+  <testcase name="equalsNotSameIdTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="equalsNotSameElectricityTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="equalsNotSameGasTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="equalsSameLivingTest" classname="oop.SettingsDetailsTest" time="0.0"/>
+  <testcase name="equalsSameTest" classname="oop.SettingsDetailsTest" time="0.001"/>
+  <system-out><![CDATA[{"electricityEmmFactor":4.0,"electricityPrice":3.0,"natGasPrice":5.0,"livingSpace":6.0,"userId":1,"gasPrice":2.0}
+{"electricityEmmFactor":4.0,"electricityPrice":3.0,"natGasPrice":5.0,"livingSpace":6.0,"userId":1,"gasPrice":2.0}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

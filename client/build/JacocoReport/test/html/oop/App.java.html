@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.source.html" class="el_package">oop</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package oop;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import oop.connection.Connection;
+import oop.details.AchievementDetails;
+import oop.details.BadgeDetails;
+import oop.details.RegistrationDetails;
+import oop.scenes.SceneController;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+
+/**
+ * Start the login window.
+ */
+<span class="nc" id="L22">public class App extends Application {</span>
+
+    public static Connection connection;
+    public static ArrayList&lt;AchievementDetails&gt; achievementDetails;
+    public static ArrayList&lt;BadgeDetails&gt; badgeDetails;
+
+<span class="fc" id="L28">    private static final Logger logger = Logger.getLogger(App.class.getName());</span>
+    private static final String pathToLogFile = &quot;./logs/LogFile.log&quot;;
+    private static FileHandler fh;
+
+
+    private static String username;
+    private static int userId;
+
+    private static RegistrationDetails globalRegister;
+
+    /**
+     * Entry point of the app.
+     *
+     * @param args the arguments the app is launched with
+     */
+
+
+    public static void main(final String[] args) {
+<span class="nc" id="L46">        username = &quot;&quot;;</span>
+
+        try {
+
+            // This block configure the logger with handler and formatter
+<span class="nc" id="L51">            fh = new FileHandler(pathToLogFile);</span>
+<span class="nc" id="L52">            logger.addHandler(fh);</span>
+<span class="nc" id="L53">            SimpleFormatter formatter = new SimpleFormatter();</span>
+<span class="nc" id="L54">            fh.setFormatter(formatter);</span>
+
+            // the following statement is used to log any messages
+<span class="nc" id="L57">            logger.info(&quot;Start of the Client Log&quot;);</span>
+
+<span class="nc" id="L59">        } catch (IOException e) {</span>
+<span class="nc" id="L60">            logger.warning(&quot;Error while loading logger&quot;);</span>
+<span class="nc" id="L61">        }</span>
+
+<span class="nc" id="L63">        launch();</span>
+<span class="nc" id="L64">    }</span>
+
+    public static String getUsername() {
+<span class="fc" id="L67">        return username;</span>
+    }
+
+    public static void setUsername(String newUsername) {
+<span class="fc" id="L71">        username = newUsername;</span>
+<span class="fc" id="L72">    }</span>
+
+    public static int getUserId() {
+<span class="fc" id="L75">        return userId;</span>
+    }
+
+    public static void setUserId(int userId) {
+<span class="nc" id="L79">        App.userId = userId;</span>
+<span class="nc" id="L80">    }</span>
+
+    public static RegistrationDetails getGlobalRegister() {
+<span class="nc" id="L83">        return globalRegister;</span>
+    }
+
+    public static void setGlobalRegister(RegistrationDetails globalRegister) {
+<span class="nc" id="L87">        App.globalRegister = globalRegister;</span>
+<span class="nc" id="L88">    }</span>
+
+    public static void log(Level level, String callerClass, String msg) {
+<span class="fc" id="L91">        logger.log(level, callerClass + &quot;: &quot; + msg);</span>
+<span class="fc" id="L92">    }</span>
+
+    @Override
+    public final void start(final Stage stage) {
+
+
+
+<span class="nc" id="L99">        logger.entering(getClass().getName(), &quot;start&quot;);</span>
+
+<span class="nc" id="L101">        SceneController sceneController = new SceneController(stage);</span>
+
+<span class="nc" id="L103">        connection = new Connection();</span>
+
+<span class="nc" id="L105">        achievementDetails = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L106">        achievementDetails.add(new AchievementDetails(-1, &quot;-1&quot;, &quot;bogus&quot;, -1));</span>
+
+<span class="nc" id="L108">        badgeDetails = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L109">        badgeDetails.add(new BadgeDetails(-1, &quot;&quot;, &quot;&quot;));</span>
+
+<span class="nc" id="L111">        SceneController.startLogin(&quot;main&quot;, false);</span>
+<span class="nc" id="L112">        stage.setResizable(false);</span>
+<span class="nc" id="L113">        stage.show();</span>
+
+<span class="nc" id="L115">        logger.exiting(getClass().getName(), &quot;start&quot;);</span>
+<span class="nc" id="L116">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

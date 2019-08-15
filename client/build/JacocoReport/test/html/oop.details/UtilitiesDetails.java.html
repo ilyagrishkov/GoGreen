@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UtilitiesDetails.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.source.html" class="el_package">oop.details</a> &gt; <span class="el_source">UtilitiesDetails.java</span></div><h1>UtilitiesDetails.java</h1><pre class="source lang-java linenums">package oop.details;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class UtilitiesDetails {
+    private int naturalgas;
+    private int watersewage;
+    private int electricityBill;
+    private int cleanEnergyPercentage;
+    private boolean solarPanels;
+    private int roomTemp;
+    private String date;
+
+
+    /**
+     * Constructor for Utilities Details.
+     * @param naturalgas - natural gas price
+     * @param watersewage - water price
+     * @param electricityBill - electricity price
+     * @param cleanEnergyPercentage - clean energy percentage
+     * @param roomTemp - room temperature
+     * @param solarPanels - true if solar panels are installed
+     */
+    public UtilitiesDetails(int naturalgas, int watersewage,
+                            int electricityBill, int cleanEnergyPercentage,
+<span class="fc" id="L34">                            int roomTemp, boolean solarPanels) {</span>
+<span class="fc" id="L35">        this.naturalgas = naturalgas;</span>
+<span class="fc" id="L36">        this.watersewage = watersewage;</span>
+<span class="fc" id="L37">        this.electricityBill = electricityBill;</span>
+<span class="fc" id="L38">        this.cleanEnergyPercentage = cleanEnergyPercentage;</span>
+<span class="fc" id="L39">        this.roomTemp = roomTemp;</span>
+<span class="fc" id="L40">        this.solarPanels = solarPanels;</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Jsonifies the Initial Survey Details to be sent to server.
+     *
+     * @return Initial Survey in json form.
+     */
+    public String stringify() {
+<span class="fc" id="L49">        Gson gson = new Gson();</span>
+
+<span class="fc" id="L51">        Map jsonMap = new HashMap();</span>
+
+<span class="fc" id="L53">        jsonMap.put(&quot;natgas&quot;, getNaturalgas());</span>
+<span class="fc" id="L54">        jsonMap.put(&quot;watersewage&quot;, getWatersewage());</span>
+<span class="fc" id="L55">        jsonMap.put(&quot;electricityBill&quot;, getElectricityBill());</span>
+<span class="fc" id="L56">        jsonMap.put(&quot;cleanEnergyPercentage&quot;, getCleanEnergyPercentage());</span>
+<span class="fc" id="L57">        jsonMap.put(&quot;roomTemp&quot;, getRoomTemp());</span>
+<span class="fc" id="L58">        jsonMap.put(&quot;solarPanels&quot;, isSolarPanels());</span>
+
+<span class="fc" id="L60">        String message = gson.toJson(jsonMap);</span>
+
+<span class="fc" id="L62">        System.out.println(message);</span>
+
+<span class="fc" id="L64">        return message;</span>
+    }
+
+    /**
+     * Parses a JSON containing a list of utilities details.
+     * @param json JSON containing utilities
+     * @return Returns an arraylist containing UserDetails.
+     */
+    public static ArrayList&lt;UtilitiesDetails&gt; parse(String json) {
+
+<span class="fc" id="L74">        JsonElement jsonElement = new JsonParser().parse(json);</span>
+<span class="fc" id="L75">        JsonObject jsonObject = jsonElement.getAsJsonObject();</span>
+<span class="fc" id="L76">        JsonArray jsonArray = jsonObject.getAsJsonArray(&quot;utilities&quot;);</span>
+
+<span class="fc" id="L78">        ArrayList&lt;UtilitiesDetails&gt; utilitiesDetails = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        for (int i = 0; i &lt; jsonArray.size(); i++) {</span>
+
+<span class="fc" id="L82">            UtilitiesDetails utilitiesDetails1 = new UtilitiesDetails(</span>
+<span class="fc" id="L83">                    jsonArray.get(i).getAsJsonObject().get(&quot;gas&quot;).getAsInt(),</span>
+<span class="fc" id="L84">                    jsonArray.get(i).getAsJsonObject().get(&quot;water&quot;).getAsInt(),</span>
+<span class="fc" id="L85">                    jsonArray.get(i).getAsJsonObject().get(&quot;electricity&quot;).getAsInt(),</span>
+<span class="fc" id="L86">                    jsonArray.get(i).getAsJsonObject().get(&quot;perCleanEnergy&quot;).getAsInt(),</span>
+                    0,
+                    false
+            );
+
+<span class="fc" id="L91">            String date = jsonArray.get(i).getAsJsonObject().get(&quot;datetime&quot;).getAsString();</span>
+
+<span class="fc" id="L93">            utilitiesDetails1.setDate(date.substring(0, date.length() - 9));</span>
+
+<span class="fc" id="L95">            utilitiesDetails.add(utilitiesDetails1);</span>
+        }
+
+
+<span class="fc" id="L99">        return utilitiesDetails;</span>
+    }
+
+    public String getDate() {
+<span class="fc" id="L103">        return date;</span>
+    }
+
+    public void setDate(String date) {
+<span class="fc" id="L107">        this.date = date;</span>
+<span class="fc" id="L108">    }</span>
+
+    public int getNaturalgas() {
+<span class="fc" id="L111">        return naturalgas;</span>
+    }
+
+    public void setNaturalgas(int naturalgas) {
+<span class="fc" id="L115">        this.naturalgas = naturalgas;</span>
+<span class="fc" id="L116">    }</span>
+
+    public int getWatersewage() {
+<span class="fc" id="L119">        return watersewage;</span>
+    }
+
+    public void setWatersewage(int watersewage) {
+<span class="fc" id="L123">        this.watersewage = watersewage;</span>
+<span class="fc" id="L124">    }</span>
+
+    public int getElectricityBill() {
+<span class="fc" id="L127">        return electricityBill;</span>
+    }
+
+    public void setElectricityBill(int elecricityBill) {
+<span class="fc" id="L131">        this.electricityBill = elecricityBill;</span>
+<span class="fc" id="L132">    }</span>
+
+    public int getCleanEnergyPercentage() {
+<span class="fc" id="L135">        return cleanEnergyPercentage;</span>
+    }
+
+    public void setCleanEnergyPercentage(int cleanEnergyPercentage) {
+<span class="fc" id="L139">        this.cleanEnergyPercentage = cleanEnergyPercentage;</span>
+<span class="fc" id="L140">    }</span>
+
+    public boolean isSolarPanels() {
+<span class="fc" id="L143">        return solarPanels;</span>
+    }
+
+    public void setSolarPanels(boolean solarPanels) {
+<span class="fc" id="L147">        this.solarPanels = solarPanels;</span>
+<span class="fc" id="L148">    }</span>
+
+    public int getRoomTemp() {
+<span class="fc" id="L151">        return roomTemp;</span>
+    }
+
+    public void setRoomTemp(int roomTemp) {
+<span class="fc" id="L155">        this.roomTemp = roomTemp;</span>
+<span class="fc" id="L156">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

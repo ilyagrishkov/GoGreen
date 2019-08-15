@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="300.0" prefWidth="500.0"
+            style="-fx-background-color: white;" stylesheets="@../../../../../resources/style/moneydialog.css"
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="oop.scenes.dialogs.ElectricityDialogController">
+    <children>
+        <JFXTextField fx:id="price" alignment="CENTER" layoutX="64.0" layoutY="92.0" prefHeight="31.0"
+                      prefWidth="374.0"/>
+        <Label fx:id="details" layoutX="101.0" layoutY="19.0" text="HOW MUCH IS YOUR BILL"/>
+        <JFXButton fx:id="close" layoutX="183.0" layoutY="236.0" text="Cancel"/>
+        <JFXButton fx:id="done" layoutX="253.0" layoutY="236.0" text="Done"/>
+        <JFXComboBox fx:id="carpick" layoutX="296.0" layoutY="124.0" prefHeight="28.0" prefWidth="171.0"
+                     promptText="Pick Your Car" visible="false"/>
+        <Label fx:id="roomtemp" layoutX="192.0" layoutY="179.0" text="Room temperature (°C)"/>
+        <JFXToggleButton fx:id="solarpanel" contentDisplay="RIGHT" layoutX="31.0" layoutY="159.0" text="Solar Panels"/>
+        <JFXSlider fx:id="tempslider" layoutX="329.0" layoutY="182.0" max="35.0" min="10.0" value="22.0"/>
+    </children>
+</AnchorPane>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.ScoreConnectionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:14:59" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.014">
+  <properties/>
+  <testcase name="test_receiveScore_invalid" classname="oop.ScoreConnectionTest" time="0.004"/>
+  <testcase name="test_receiveScore_IOException" classname="oop.ScoreConnectionTest" time="0.003"/>
+  <testcase name="test_receiveScore_null" classname="oop.ScoreConnectionTest" time="0.002"/>
+  <testcase name="test_receiveScore_valid" classname="oop.ScoreConnectionTest" time="0.003"/>
+  <system-out><![CDATA[100
+]]></system-out>
+  <system-err><![CDATA[Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+WARNING: oop.connection.Connection: IOException - GET to Server - Retrieving Food
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+]]></system-err>
+</testsuite>

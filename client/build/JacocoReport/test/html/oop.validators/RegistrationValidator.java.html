@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegistrationValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.source.html" class="el_package">oop.validators</a> &gt; <span class="el_source">RegistrationValidator.java</span></div><h1>RegistrationValidator.java</h1><pre class="source lang-java linenums">package oop.validators;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+<span class="nc" id="L7">public class RegistrationValidator extends Validator {</span>
+
+    /**
+     * Month with 31 days in it.
+     */
+    public static final int DAYS_31 = 31;
+
+    /**
+     * Month with 30 days in it.
+     */
+    public static final int DAYS_30 = 30;
+
+    /**
+     * Month with 29 days in it.
+     */
+    public static final int DAYS_29 = 29;
+
+    /**
+     * Month with 28 days in it.
+     */
+    public static final int DAYS_28 = 28;
+
+    /**
+     * Test variable for a leap year.
+     */
+    public static final int LEAP_YEAR_TEST_4 = 4;
+
+    /**
+     * Test variable for a leap year.
+     */
+    public static final int LEAP_YEAR_TEST_100 = 100;
+
+    /**
+     * Test variable for a leap year.
+     */
+    public static final int LEAP_YEAR_TEST_400 = 400;
+
+    /**
+     * List of months with 31 days in each of them.
+     */
+<span class="fc" id="L47">    public static final Set&lt;String&gt; MONTHS_WITH_31_DAYS =</span>
+<span class="fc" id="L48">            new HashSet&lt;&gt;(Arrays.asList(&quot;January&quot;, &quot;March&quot;, &quot;May&quot;,</span>
+                    &quot;July&quot;, &quot;August&quot;, &quot;October&quot;, &quot;December&quot;));
+
+    /**
+     * List of months with 30 days in each of them.
+     */
+<span class="fc" id="L54">    public static final Set&lt;String&gt; MONTHS_WITH_30_DAYS =</span>
+<span class="fc" id="L55">            new HashSet&lt;&gt;(Arrays.asList(&quot;April&quot;, &quot;June&quot;, &quot;September&quot;,</span>
+                    &quot;November&quot;));
+
+
+    /**
+     * Checks if name in given TextField value matches regular expression.
+     *
+     * @param userInput text to check
+     * @return -  return true, if pattern matches
+     */
+    public static final boolean validateName(final String userInput) {
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        return userInput != null</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">                &amp;&amp; userInput.matches(&quot;[a-zA-Z]+&quot;);</span>
+    }
+
+    /**
+     * Checks if password equals repassword.
+     *
+     * @param password   - entered password
+     * @param repassword - entered repassword
+     * @return - true if equals
+     */
+    public static final boolean checkRePassword(final String password,
+                                                final String repassword) {
+
+<span class="fc bfc" id="L81" title="All 4 branches covered.">        return password.equals(repassword) &amp;&amp; !password.equals(&quot;&quot;);</span>
+    }
+
+
+    /**
+     * Checks how many days are in the month/year, picked by a user.
+     *
+     * @param month - month to check
+     * @param year  - year to check
+     * @return - returns number of days in chose month/year
+     */
+    public static final int validateNumberOfDays(final String month, final int year) {
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (MONTHS_WITH_31_DAYS.contains(month)) {</span>
+
+<span class="fc" id="L96">            return DAYS_31;</span>
+
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        } else if (MONTHS_WITH_30_DAYS.contains(month)) {</span>
+
+<span class="fc" id="L100">            return DAYS_30;</span>
+
+        } else {
+
+<span class="fc bfc" id="L104" title="All 6 branches covered.">            if (((year % LEAP_YEAR_TEST_4 == 0)</span>
+                    &amp;&amp; (year % LEAP_YEAR_TEST_100 != 0))
+                    || (year % LEAP_YEAR_TEST_400 == 0)) {
+
+<span class="fc" id="L108">                return DAYS_29;</span>
+
+            } else {
+
+<span class="fc" id="L112">                return DAYS_28;</span>
+            }
+        }
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,85 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+#lblBeef,
+#lblFish,
+#lblOther,
+#lblPoultry,
+#lblGrains,
+#lblDairy,
+#lblFruits,
+#lblSnacks {
+    -fx-font-family: "Marker";
+    -fx-font-size: 16;
+}
+
+#composition {
+    -fx-font-family: "Marker";
+}
+
+#homecooked,
+#local {
+    -fx-font-family: "Marker";
+    -fx-font-size: 15;
+}
+
+#mainPane {
+    -fx-background-image: url(../images/piechart_2.jpg);
+    -fx-background-size: cover;
+}
+
+#profileBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/profile_white_50.png');
+}
+
+#profileBtn:hover {
+    -fx-background-image: url('../images/profile_green_50.png');
+}
+
+#homeBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/home_white_50.png');
+}
+
+#homeBtn:hover {
+    -fx-background-image: url('../images/home_green_50.png');
+}
+
+#doneBtn {
+    -fx-font-family: "Marker";
+    -fx-font-size: 20;
+    -fx-background-color: null;
+    -fx-border-color: white;
+    -fx-border-width: 3;
+    -fx-padding: 0;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-min-width: 50;
+    -fx-min-height: 50;
+    -fx-max-height: 50;
+    -fx-max-width: 50;
+}
+
+#doneBtn:hover {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#doneBtn:pressed {
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-scale-y: 0.95;
+    -fx-scale-x: 0.95;
+}
+
+#doneBtn:focused {
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
+#doneBtn:hover:focused {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}

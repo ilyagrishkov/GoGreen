@@ -1,0 +1,102 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+* {
+    -fx-font-family: "Marker";
+}
+
+#elecdefault,
+#emissionsdefault,
+#naturalgasdefault,
+#gasolinedefault {
+
+    -fx-font-size: 15;
+}
+
+#elecprice,
+#emissions,
+#naturalgasprice,
+#gasolineprice,
+#livingspace {
+    -fx-font-size: 20;
+}
+
+#finishButton {
+    -fx-background-color: null;
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-border-width: 3;
+    -fx-padding: 0;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-min-width: 100;
+    -fx-min-height: 100;
+    -fx-max-height: 100;
+    -fx-max-width: 100;
+    -fx-font-size: 35;
+}
+
+#finishButton:hover {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#finishButton:pressed {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-scale-y: 0.99;
+    -fx-scale-x: 0.99;
+}
+
+#finishButton:focused {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#finishButton:hover:focused {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#elecprice,
+#emissions,
+#naturalgasprice,
+#gasolineprice,
+#livingspace,
+#mealcomposition,
+#addcar {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #61b73a;
+    -fx-border-width: 2;
+}
+
+#mealcomposition,
+#addcar {
+    -fx-background-color: null;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #61b73a;
+}
+
+#addcar:hover {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#addcar:pressed {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-scale-y: 0.99;
+    -fx-scale-x: 0.99;
+}
+
+#addcar:focused {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#addcar:hover:focused {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}

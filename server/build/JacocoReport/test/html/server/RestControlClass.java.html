@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestControlClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server</a> &gt; <span class="el_source">RestControlClass.java</span></div><h1>RestControlClass.java</h1><pre class="source lang-java linenums">package server;
+
+import com.google.maps.errors.ApiException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import server.api.connection.Connection;
+import server.api.connection.FoodData;
+import server.api.connection.TransportationApi;
+import server.api.connection.UtilitiesData;
+import server.envy.me.achievements.AchievementsClass;
+import server.envy.me.achievements.AchievementsRepository;
+import server.envy.me.achievements.AchievementsToClient;
+import server.envy.me.badges.BadgesClass;
+import server.envy.me.badges.BadgesRepository;
+import server.envy.me.badges.BadgesService;
+import server.envy.me.badges.BadgesToClient;
+import server.envy.me.car.CarClass;
+import server.envy.me.car.CarRepository;
+import server.envy.me.car.CarService;
+import server.envy.me.car.CarWithName;
+import server.envy.me.food.FoodClass;
+import server.envy.me.food.FoodRepository;
+import server.envy.me.food.FoodToClient;
+import server.envy.me.initsurvey.InitSurveyClass;
+import server.envy.me.leaderboard.LeaderboardClass;
+import server.envy.me.leaderboard.LeaderboardRepository;
+import server.envy.me.leaderboard.LeaderboardService;
+import server.envy.me.leaderboard.LeaderboardToClient;
+import server.envy.me.login.LoginClass;
+import server.envy.me.login.LoginRepository;
+import server.envy.me.registration.RegistrationClass;
+import server.envy.me.registration.RegistrationRepository;
+import server.envy.me.registration.RegistrationService;
+import server.envy.me.response.ResponseClass;
+import server.envy.me.settings.SettingsClass;
+import server.envy.me.settings.SettingsRepository;
+import server.envy.me.trip.CO2Calculator;
+import server.envy.me.trip.TripClass;
+import server.envy.me.trip.TripRepository;
+import server.envy.me.trip.TripToClient;
+import server.envy.me.userachievements.UserAchievementsClass;
+import server.envy.me.userachievements.UserAchievementsRepository;
+import server.envy.me.userachievements.UserAchievementsService;
+import server.envy.me.userbadges.UserBadgesClass;
+import server.envy.me.userbadges.UserBadgesRepository;
+import server.envy.me.userbadges.UserBadgesService;
+import server.envy.me.userfood.UserFoodClass;
+import server.envy.me.userfood.UserFoodRepository;
+import server.envy.me.userfood.UserFoodService;
+import server.envy.me.userfriends.UserFriendsClass;
+import server.envy.me.userfriends.UserFriendsPostClass;
+import server.envy.me.userfriends.UserFriendsRepository;
+import server.envy.me.userfriends.UserFriendsService;
+import server.envy.me.userfriends.UserFriendsToClient;
+import server.envy.me.usertrips.UserTripClass;
+import server.envy.me.usertrips.UserTripRepository;
+import server.envy.me.usertrips.UserTripService;
+import server.envy.me.userutilities.UserUtilitiesClass;
+import server.envy.me.userutilities.UserUtilitiesRepository;
+import server.envy.me.userutilities.UserUtilitiesService;
+import server.envy.me.utilities.UtilitiesClass;
+import server.envy.me.utilities.UtilitiesFromClient;
+import server.envy.me.utilities.UtilitiesRepository;
+import server.envy.me.utilities.UtilitiesService;
+import server.envy.me.utilities.UtilitiesToClient;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+/**
+ * Control Class for all the servers RESTfullness.
+ */
+@WebAppConfiguration
+@RestController
+@SuppressWarnings(&quot;unused&quot;)
+<span class="fc" id="L91">public class RestControlClass {</span>
+
+    @Autowired
+    LoginRepository loginRepo;
+
+    @Autowired
+    RegistrationRepository registrationRepo;
+
+    @Autowired
+    FoodRepository foodRepo;
+
+    @Autowired
+    UserFoodRepository userFoodRepo;
+
+    @Autowired
+    UserFriendsRepository userFriendsRepo;
+
+    @Autowired
+    UserFriendsService userFriendsService;
+
+    @Autowired
+    UserFoodService userFoodService;
+
+    @Autowired
+    RegistrationService registrationService;
+
+    @Autowired
+    CarRepository carRepository;
+
+    @Autowired
+    CarService carService;
+
+    @Autowired
+    TripRepository tripRepository;
+
+    @Autowired
+    TransportationApi transportationApi;
+
+    @Autowired
+    CO2Calculator co2Calculator;
+
+    @Autowired
+    UserTripRepository userTripRepository;
+
+    @Autowired
+    UserTripService userTripService;
+
+    @Autowired
+    SettingsRepository settingsRepository;
+
+    @Autowired
+    AchievementsRepository achievementsRepository;
+
+    @Autowired
+    UserAchievementsRepository userAchievementsRepository;
+
+    @Autowired
+    UserAchievementsService userAchievementsService;
+
+    @Autowired
+    UserBadgesRepository userBadgesRepository;
+
+    @Autowired
+    UserBadgesService userBadgesService;
+
+    @Autowired
+    BadgesRepository badgesRepository;
+
+    @Autowired
+    BadgesService badgesService;
+
+    @Autowired
+    UtilitiesRepository utilitiesRepository;
+
+    @Autowired
+    UtilitiesService utilitiesService;
+
+    @Autowired
+    UserUtilitiesRepository userUtilitiesRepository;
+
+    @Autowired
+    UserUtilitiesService userUtilitiesService;
+
+    @Autowired
+    LeaderboardRepository leaderboardRepository;
+
+    @Autowired
+    LeaderboardService leaderboardService;
+
+    @Autowired
+    Connection connection;
+
+    //https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions
+    //https://www.sciencedaily.com/releases/2008/04/080428120658.htm
+    //average of tCO2e/year
+<span class="fc" id="L186">    private int averageTco2eperYear = 20;</span>
+
+    //converted average into kg per day
+<span class="fc" id="L189">    private int averagekgCo2eperday = (averageTco2eperYear / 365) * 1000;</span>
+
+    //The following final variables will store the average food consumption calories per meal.
+    /**
+     * FOOD.
+     */
+<span class="fc" id="L195">    private final int averageVeganScore = 53;</span>
+<span class="fc" id="L196">    private final int averageVegetarianScore = 51;</span>
+<span class="fc" id="L197">    private final int averagePescatarianScore = 81;</span>
+<span class="fc" id="L198">    private final int averageLowMeatScore = 82;</span>
+<span class="fc" id="L199">    private final int averageMediumMeat = 87;</span>
+<span class="fc" id="L200">    private final int averageHighMeatScore = 101;</span>
+
+    /**
+     * TRANSPORTATION.
+     */
+<span class="fc" id="L205">    private final int averageTransporationConsumptionByKm = 82;</span>
+
+    /**
+     * UTILITIES.
+     */
+<span class="fc" id="L210">    private final int defaultElectricity = 100;</span>
+<span class="fc" id="L211">    private final int defaultPerCleanEnergy = 50;</span>
+<span class="fc" id="L212">    private final int defaultWater = 35;</span>
+<span class="fc" id="L213">    private final int defaultGas = 19;</span>
+<span class="fc" id="L214">    private final int defaultOther = 0;</span>
+
+
+    /**
+     * This will be the default POST request from client.
+     * Returns FROM SERVER + what the client.
+     *
+     * @param payload simple POST message body
+     * @return pinging the payload with an added message
+     */
+    @RequestMapping(value = &quot;/&quot;, method = RequestMethod.POST)
+    public final String answeringPost(@RequestBody final String payload) {
+<span class="fc" id="L226">        return &quot;From Server: &quot; + payload;</span>
+    }
+
+    /**
+     * Default GET method returning a message.
+     *
+     * @return returns a basic message to see if it works
+     */
+    @RequestMapping(value = &quot;/&quot;, method = RequestMethod.GET)
+    public final String answeringGet() {
+<span class="fc" id="L236">        return &quot;You should send a POST request to see something interesting&quot;;</span>
+    }
+
+    /**
+     * Method for testing JSON get message.
+     *
+     * @return returns a JSON message to make sure it works
+     */
+    @RequestMapping(value = &quot;/getJSON&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;ResponseClass&gt; testingJsonGetRequest() {
+<span class="fc" id="L246">        ResponseClass ret = new ResponseClass(&quot;This is the test GET JSON page&quot;);</span>
+
+<span class="fc" id="L248">        return new ResponseEntity&lt;ResponseClass&gt;(ret, HttpStatus.OK);</span>
+    }
+
+    ////////////////////////////////////
+    //          REGISTRATION          //
+    ////////////////////////////////////
+
+    /**
+     * Method to answer registration a JSON POST request.
+     *
+     * @param newUserInfo JSON message to receive
+     * @return returns a JSON response object
+     */
+    @RequestMapping(value = &quot;/registration&quot;, method = RequestMethod.POST)
+    public final ResponseEntity&lt;ResponseClass&gt; registration(
+            @RequestBody final RegistrationClass newUserInfo) {
+
+<span class="fc" id="L265">        ResponseClass out = new ResponseClass();</span>
+
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        if (userNotInUse(newUserInfo.getUsername())) {</span>
+
+            //Create instance of Login Info
+<span class="fc" id="L270">            LoginClass userLoginInfo = new LoginClass();</span>
+<span class="fc" id="L271">            userLoginInfo.setPassword(newUserInfo.getPassword());</span>
+<span class="fc" id="L272">            userLoginInfo.setUsername(newUserInfo.getUsername());</span>
+
+            //Save LoginInfo in the database
+<span class="fc" id="L275">            loginRepo.save(userLoginInfo);</span>
+
+<span class="fc" id="L277">            System.out.println(&quot;Login Info user: &quot;</span>
+<span class="fc" id="L278">                    + newUserInfo.getUsername() + &quot; saved in the database&quot;);</span>
+
+            //Get the id to store in RegistrationClass
+<span class="fc" id="L281">            int id = loginRepo.findByUsername(newUserInfo.getUsername()).getId();</span>
+
+            //In order to map as a FK
+<span class="fc" id="L284">            newUserInfo.setId(id);</span>
+
+<span class="fc" id="L286">            registrationRepo.save(newUserInfo);</span>
+
+<span class="fc" id="L288">            System.out.println(&quot;Registration Info user: &quot;</span>
+<span class="fc" id="L289">                    + newUserInfo.getUsername() + &quot; saved in the database&quot;);</span>
+<span class="fc" id="L290">            out.setPayload(&quot;OK&quot;);</span>
+
+            //Save in leaderboard as well with an initial score of 0
+<span class="fc" id="L293">            leaderboardRepository.save(new LeaderboardClass(id, 0));</span>
+<span class="fc" id="L294">            System.out.println(newUserInfo.getUsername() + &quot; stored in the leaderboard.&quot;);</span>
+<span class="fc" id="L295">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        }
+<span class="fc" id="L297">        out.setPayload(&quot;Username already taken&quot;);</span>
+<span class="fc" id="L298">        System.out.println(&quot;Username is already used&quot;);</span>
+<span class="fc" id="L299">        return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+    }
+
+    /**
+     * Method to deal with the initial survey mapping.
+     *
+     * @param payload JSON String of the InitSurveyClass
+     * @return : payload
+     */
+    @RequestMapping(value = &quot;/initialSurvey&quot;, method = RequestMethod.POST)
+    public final ResponseEntity&lt;ResponseClass&gt; initialSurvey(@RequestBody final String payload) {
+        //System.out.println(payload);
+<span class="nc" id="L311">        ResponseClass out = new ResponseClass();</span>
+
+        try {
+<span class="nc" id="L314">            JSONObject obj = new JSONObject(payload);</span>
+<span class="nc" id="L315">            String username = obj.getString(&quot;username&quot;);</span>
+<span class="nc" id="L316">            String cartype = obj.getString(&quot;carType&quot;);</span>
+<span class="nc" id="L317">            String gasbill = obj.getString(&quot;gasbill&quot;);</span>
+<span class="nc" id="L318">            String elecbill = obj.getString(&quot;elecbill&quot;);</span>
+<span class="nc" id="L319">            String mealComp = obj.getString(&quot;mealComp&quot;);</span>
+<span class="nc" id="L320">            int nbofPeople = obj.getInt(&quot;nbofPeople&quot;);</span>
+
+<span class="nc" id="L322">            InitSurveyClass survey = new InitSurveyClass(username, cartype,</span>
+                    elecbill, gasbill, nbofPeople, mealComp);
+
+<span class="nc" id="L325">            System.out.println(survey.toString());</span>
+<span class="nc" id="L326">        } catch (JSONException e) {</span>
+<span class="nc" id="L327">            System.out.println(&quot;JSON error&quot;);</span>
+
+<span class="nc" id="L329">            out.setPayload(&quot;JSON error&quot;);</span>
+<span class="nc" id="L330">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L331">        } catch (NullPointerException e) {</span>
+<span class="nc" id="L332">            System.out.println(&quot;null pointer exception&quot;);</span>
+
+<span class="nc" id="L334">            out.setPayload(&quot;Null Pointer error&quot;);</span>
+<span class="nc" id="L335">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L336">        }</span>
+
+<span class="nc" id="L338">        out.setPayload(&quot;OK&quot;);</span>
+<span class="nc" id="L339">        return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Delete user from database in registration Table.
+     *
+     * @param delUserInfo : info of the userto delete
+     * @return : payload
+     */
+    @RequestMapping(value = &quot;/deleteRegistration&quot;, method = RequestMethod.POST)
+    public final ResponseEntity&lt;ResponseClass&gt; deleteRegistration(
+            @RequestBody final RegistrationClass delUserInfo) {
+<span class="fc" id="L351">        final ResponseClass out = new ResponseClass();</span>
+<span class="fc" id="L352">        int id = loginRepo.findByUsername(delUserInfo.getUsername()).getId();</span>
+<span class="fc" id="L353">        settingsRepository.deleteById(id);</span>
+<span class="fc" id="L354">        leaderboardRepository.deleteById(id);</span>
+<span class="fc" id="L355">        registrationRepo.deleteById(id);</span>
+<span class="fc" id="L356">        loginRepo.deleteById(id);</span>
+
+<span class="fc" id="L358">        System.out.println(&quot;Deleting Registration from Database - &quot; + delUserInfo.getUsername());</span>
+
+<span class="fc" id="L360">        out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L361">        return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Method checks if username is already in use.
+     *
+     * @param username to search if it has been already used.
+     * @return
+     */
+    private boolean userNotInUse(String username) {
+<span class="fc" id="L371">        boolean flag = true;</span>
+<span class="fc" id="L372">        LoginClass out = loginRepo.findByUsername(username);</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">        if (out != null) {</span>
+<span class="fc" id="L374">            flag = false;</span>
+        }
+<span class="fc" id="L376">        return flag;</span>
+    }
+
+    /**
+     * The mapping returns user information.
+     * The password attribute is set to null before sending the information.
+     * * @param username of the user to retrieve information
+     *
+     * @return RegistrationClass instance.
+     */
+    @RequestMapping(value = &quot;/{username}/getRegistrationInfo&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;RegistrationClass&gt; getRegistrationInfo(
+            @PathVariable String username) {
+<span class="fc" id="L389">        int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L390">        RegistrationClass userInfo = registrationService.getRegistrationInfo(userId);</span>
+<span class="fc" id="L391">        userInfo.setPassword(null);</span>
+<span class="fc" id="L392">        userInfo.setUsername(username);</span>
+<span class="fc" id="L393">        return new ResponseEntity&lt;RegistrationClass&gt;(userInfo, HttpStatus.OK);</span>
+    }
+
+    ////////////////////////////////////
+    //              LOGIN             //
+    ////////////////////////////////////
+
+    /**
+     * Method to answer authorization a JSON POST request.
+     *
+     * @param userToAuth JSON message to receive
+     * @return returns a JSON response object
+     */
+    @RequestMapping(value = &quot;/authorization&quot;, method = RequestMethod.POST)
+    public final ResponseEntity&lt;ResponseClass&gt; authorization(
+            @RequestBody final LoginClass userToAuth) {
+<span class="fc" id="L409">        ResponseClass out = new ResponseClass();</span>
+        //Check user exists
+<span class="fc bfc" id="L411" title="All 2 branches covered.">        if (loginRepo.findByUsername(userToAuth.getUsername()) != null) {</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">            if (userToAuth.getPassword().equals(loginRepo.findByUsername(</span>
+<span class="fc" id="L413">                    userToAuth.getUsername()).getPassword())) {</span>
+<span class="fc" id="L414">                out.setPayload(loginRepo.findByUsername(userToAuth.getUsername()).getId() + &quot;&quot;);</span>
+<span class="fc" id="L415">                return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+            }
+        }
+<span class="fc" id="L418">        out.setPayload(&quot;User : &quot; + userToAuth.getUsername()</span>
+                + &quot; is NOT authenticated&quot;);
+<span class="fc" id="L420">        return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+    }
+
+
+    ////////////////////////////////////
+    //              FOOD              //
+    ////////////////////////////////////
+
+    /**
+     * Method to store food info about a user.
+     * The username is passed in as a PathVariable
+     *
+     * @param foodToStore - foodClass object to store
+     * @return message
+     */
+    @RequestMapping(value = &quot;/{username}/food&quot;, method = RequestMethod.POST)
+    public final ResponseEntity&lt;ResponseClass&gt; food(
+            @RequestBody final FoodClass foodToStore, @PathVariable String username) {
+
+<span class="fc" id="L439">        ResponseClass out = new ResponseClass();</span>
+<span class="fc bfc" id="L440" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+
+<span class="fc" id="L442">            foodToStore.setDate(new Timestamp(System.currentTimeMillis()));</span>
+<span class="fc" id="L443">            System.out.println(foodToStore.getDate());</span>
+
+            double meatfisheggs;
+            double cereals;
+            double veggies;
+            double otherfood;
+            double dairy;
+
+<span class="fc" id="L451">            double tempMeat = foodToStore.getFish() + foodToStore.getEggs()</span>
+<span class="fc" id="L452">                    + foodToStore.getMeat() + foodToStore.getMeatAlt();</span>
+            //System.out.println(tempMeat);
+<span class="fc bfc" id="L454" title="All 2 branches covered.">            if (tempMeat == 0) {</span>
+<span class="fc" id="L455">                meatfisheggs = 0;</span>
+            } else {
+<span class="fc" id="L457">                meatfisheggs = 0.01 * tempMeat;</span>
+            }
+
+<span class="fc" id="L460">            double tempCereal = foodToStore.getGrains();</span>
+            //System.out.println(tempCereal);
+<span class="fc bfc" id="L462" title="All 2 branches covered.">            if (tempCereal == 0) {</span>
+<span class="fc" id="L463">                cereals = 0;</span>
+            } else {
+<span class="fc" id="L465">                cereals = 0.01 * tempCereal;</span>
+            }
+
+<span class="fc" id="L468">            double tempVeggies = foodToStore.getVeggies();</span>
+            //System.out.println(tempVeggies);
+<span class="fc bfc" id="L470" title="All 2 branches covered.">            if (tempVeggies == 0) {</span>
+<span class="fc" id="L471">                veggies = 0;</span>
+            } else {
+<span class="fc" id="L473">                veggies = 0.01 * tempVeggies;</span>
+            }
+
+<span class="fc" id="L476">            double tempOtherfood = foodToStore.getSnacks();</span>
+            //System.out.println(tempOtherfood);
+<span class="fc bfc" id="L478" title="All 2 branches covered.">            if (tempOtherfood == 0) {</span>
+<span class="fc" id="L479">                otherfood = 0;</span>
+            } else {
+<span class="fc" id="L481">                otherfood = 0.01 * tempOtherfood;</span>
+            }
+
+<span class="fc" id="L484">            double tempDairy = foodToStore.getDairy();</span>
+            //System.out.println(tempDairy);
+<span class="fc bfc" id="L486" title="All 2 branches covered.">            if (tempDairy == 0) {</span>
+<span class="fc" id="L487">                dairy = 0;</span>
+            } else {
+<span class="fc" id="L489">                dairy = 0.01 * tempDairy;</span>
+            }
+
+<span class="fc" id="L492">            foodRepo.save(foodToStore);</span>
+<span class="fc" id="L493">            int foodId = foodToStore.getId();</span>
+<span class="fc" id="L494">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L495">            UserFoodClass userFoodRef = new UserFoodClass(foodId, userId);</span>
+<span class="fc" id="L496">            userFoodRepo.save(userFoodRef);</span>
+
+<span class="fc" id="L498">            int averageCalories = 575;</span>
+
+<span class="fc" id="L500">            double total = +meatfisheggs + cereals + veggies + otherfood + dairy;</span>
+<span class="fc" id="L501">            System.out.println(&quot;MeatFishEggs: &quot; + meatfisheggs + &quot; Cereals: &quot; + cereals</span>
+                    + &quot; Veggies: &quot; + veggies + &quot; Snacks: &quot; + otherfood + &quot; Dairy: &quot; + dairy
+                    + &quot; Total: &quot; + total);
+
+            //Create food score
+<span class="fc" id="L506">            FoodData foodData = new FoodData((int) (meatfisheggs * averageCalories),</span>
+                    (int) (dairy * averageCalories), (int) (otherfood * averageCalories),
+                    (int) (veggies * averageCalories), (int) (cereals * averageCalories));
+<span class="fc" id="L509">            UtilitiesData utilitiesData = new UtilitiesData(0, 0, 0, 0, 0, 0, 0);</span>
+<span class="fc" id="L510">            int rawScore = connection.getTotal(&quot;result_food_total&quot;, 0, 0, utilitiesData,</span>
+                    foodData);
+
+<span class="fc" id="L513">            System.out.println(&quot;Raw Score: &quot; + rawScore);</span>
+
+<span class="fc bfc" id="L515" title="All 2 branches covered.">            if (rawScore &gt; 0) {</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">                if (foodToStore.isCooked()) {</span>
+<span class="fc" id="L517">                    rawScore -= 50;</span>
+                }
+
+<span class="fc bfc" id="L520" title="All 2 branches covered.">                if (foodToStore.isLocal()) {</span>
+<span class="fc" id="L521">                    rawScore -= 50;</span>
+                }
+
+<span class="fc" id="L524">                System.out.println(&quot;Raw Score: &quot; + rawScore);</span>
+
+<span class="fc" id="L526">                int score = 0;</span>
+
+                //In order to compute the score of the meal, we compute the difference
+                //Between an average meal of that type and the meal the user had.
+
+<span class="fc bfc" id="L531" title="All 7 branches covered.">                switch (foodToStore.getType()) {</span>
+                    case &quot;Vegan&quot;:
+<span class="fc" id="L533">                        score = averageVeganScore - rawScore;</span>
+<span class="fc" id="L534">                        break;</span>
+                    case &quot;Vegetarian&quot;:
+<span class="fc" id="L536">                        score = averageVegetarianScore - rawScore;</span>
+<span class="fc" id="L537">                        break;</span>
+                    case &quot;Pescetarian&quot;:
+<span class="fc" id="L539">                        score = averagePescatarianScore - rawScore;</span>
+<span class="fc" id="L540">                        break;</span>
+                    case &quot;Low meat&quot;:
+<span class="fc" id="L542">                        score = averageLowMeatScore - rawScore;</span>
+<span class="fc" id="L543">                        break;</span>
+                    case &quot;Medium meat&quot;:
+<span class="fc" id="L545">                        score = averageMediumMeat - rawScore;</span>
+<span class="fc" id="L546">                        break;</span>
+                    case &quot;High meat&quot;:
+<span class="fc" id="L548">                        score = averageHighMeatScore - rawScore;</span>
+<span class="fc" id="L549">                        break;</span>
+                    default:
+<span class="fc" id="L551">                        score = 0;</span>
+                }
+
+<span class="fc" id="L554">                System.out.println(&quot;SCORE IS HERE: &quot; + score);</span>
+
+<span class="fc" id="L556">                LeaderboardClass newScore = new LeaderboardClass(userId,</span>
+<span class="fc" id="L557">                        leaderboardRepository.findById(userId).getScore() + score);</span>
+
+<span class="fc" id="L559">                leaderboardRepository.save(newScore);</span>
+
+<span class="fc" id="L561">                System.out.println(&quot;Score Saved in leaderboard.&quot;);</span>
+            }
+
+<span class="fc" id="L564">            out.setPayload(&quot;Food stored&quot;);</span>
+<span class="fc" id="L565">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        }
+<span class="fc" id="L567">        out.setPayload(&quot;Username does not exist&quot;);</span>
+<span class="fc" id="L568">        return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+    }
+
+    /**
+     * This mapping deletes a food based on the id specified in the GET request.
+     *
+     * @param id of the foodClass to be deleted
+     * @return 200 if food is deleted successfully, 400 otherwise
+     */
+    @RequestMapping(value = &quot;/{id}/deleteFood&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;ResponseClass&gt; deleteFood(@PathVariable int id) {
+<span class="fc" id="L579">        ResponseClass out = new ResponseClass();</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">        if (foodRepo.findById(id) != null) {</span>
+<span class="fc" id="L581">            userFoodRepo.deleteById(id);</span>
+<span class="fc" id="L582">            foodRepo.deleteById(id);</span>
+<span class="fc" id="L583">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L584">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L586">            out.setPayload(&quot;Food id is not stored in the database&quot;);</span>
+<span class="fc" id="L587">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This mapping receives a GET request and sends back a list of FoodClass.
+     * Of the meals recorded by the user who is logged into the app.
+     *
+     * @return a list of FoodClass objects.
+     */
+    @RequestMapping(value = &quot;/{username}/getAllFood&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;FoodToClient&gt; getAllFood(@PathVariable String username) {
+<span class="fc" id="L599">        FoodToClient allFood = new FoodToClient();</span>
+<span class="fc bfc" id="L600" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L601">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L602">            List&lt;UserFoodClass&gt; listFoodIds = userFoodService.getListFoodByUserId(userId);</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">            for (UserFoodClass mapFood : listFoodIds) {</span>
+<span class="fc" id="L604">                allFood.getFood().add(foodRepo.findById(mapFood.getFoodId()));</span>
+<span class="fc" id="L605">            }</span>
+<span class="fc" id="L606">            return new ResponseEntity&lt;FoodToClient&gt;(allFood, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L608">            return new ResponseEntity&lt;FoodToClient&gt;(allFood, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    ////////////////////////////////////
+    //              CAR               //
+    ////////////////////////////////////
+
+    /**
+     * This mapping stores a new car instance in the database.
+     * Checks Type is not NULL since it is required in the DB.
+     *
+     * @param carFromClient - car Object storing type and mpg of the car
+     * @param username      - of the user storing the car
+     * @return - &quot;OK&quot; if car is stored, BAD_REQUEST otherwise
+     */
+    @RequestMapping(value = &quot;/{username}/storeCar&quot;, method = RequestMethod.POST)
+    public ResponseEntity&lt;ResponseClass&gt; storeCar(
+            @RequestBody final CarWithName carFromClient, @PathVariable String username) {
+<span class="fc" id="L627">        ResponseClass out = new ResponseClass();</span>
+
+<span class="fc bfc" id="L629" title="All 2 branches covered.">        if (carFromClient.getType() != null) {</span>
+<span class="fc" id="L630">            CarClass carToStore = new CarClass();</span>
+
+<span class="fc" id="L632">            carToStore.setName(carFromClient.getName());</span>
+<span class="fc" id="L633">            carToStore.setType(carFromClient.getType());</span>
+<span class="fc" id="L634">            carToStore.setMpg(carFromClient.getMpg());</span>
+
+<span class="fc" id="L636">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L637">            carToStore.setUserid(userId);</span>
+<span class="fc" id="L638">            carRepository.save(carToStore);</span>
+
+<span class="fc" id="L640">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L641">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L643">            out.setPayload(&quot;Car Type violates NULL CONSTRAINT&quot;);</span>
+<span class="fc" id="L644">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This GET request returns a List of all the cars registered to the user.
+     * Since the car from the client and the Car Class used to store information
+     * in the database are two different classes, the client will get a List of Cars
+     * in the format that he is also storing them.
+     *
+     * @param username of the user you want to retrieve cars of.
+     * @return List of CarClass
+     */
+    @RequestMapping(value = &quot;{username}/getAllCars&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;List&lt;CarClass&gt;&gt; getAllCars(@PathVariable String username) {
+<span class="fc" id="L659">        List&lt;CarClass&gt; allCarClasses = new ArrayList&lt;CarClass&gt;();</span>
+<span class="fc bfc" id="L660" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L661">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L662">            allCarClasses = carService.getListCarByUserId(userId);</span>
+<span class="fc" id="L663">            return new ResponseEntity&lt;List&lt;CarClass&gt;&gt;(allCarClasses, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L665">            return new ResponseEntity&lt;List&lt;CarClass&gt;&gt;(allCarClasses, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * Mapping to deletes a car corresponding to the id passed.
+     * Communicates with the client through a GET request that includes the username.
+     *
+     * @param id of the car to be deleted.
+     * @return ResponseClass based on the outcome.
+     */
+    @RequestMapping(value = &quot;{id}/deleteCar&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;ResponseClass&gt; deleteCarById(@PathVariable int id) {
+<span class="fc" id="L678">        ResponseClass out = new ResponseClass();</span>
+<span class="fc bfc" id="L679" title="All 2 branches covered.">        if (carRepository.findById(id) != null) {</span>
+            //Retrieving all the trips with the car and replacing the carId with NULL
+<span class="fc" id="L681">            List&lt;TripClass&gt; tripsWithCar = tripRepository.findByCarId(id);</span>
+<span class="pc bpc" id="L682" title="1 of 2 branches missed.">            for (TripClass each: tripsWithCar) {</span>
+<span class="nc" id="L683">                each.setCarId(null);</span>
+<span class="nc" id="L684">                tripRepository.save(each);</span>
+<span class="nc" id="L685">            }</span>
+            //There should not be any reference to carId at this point.
+<span class="fc" id="L687">            carRepository.deleteById(id);</span>
+<span class="fc" id="L688">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L689">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L691">            out.setPayload(&quot;Car id does not exist&quot;);</span>
+<span class="fc" id="L692">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+
+    }
+
+    private TripClass transformTripClass(String payload) {
+
+<span class="fc" id="L699">        JSONObject obj = new JSONObject(payload);</span>
+
+        double distance;
+        int carId;
+<span class="fc" id="L703">        Integer car = null;</span>
+        try {
+<span class="fc" id="L705">            distance = obj.getDouble(&quot;distance&quot;);</span>
+<span class="nc" id="L706">        } catch (JSONException e) {</span>
+            //e.printStackTrace();
+<span class="nc" id="L708">            System.out.println(&quot;No Distance&quot;);</span>
+<span class="nc" id="L709">            distance = 0.0;</span>
+<span class="fc" id="L710">        }</span>
+
+        try {
+<span class="fc" id="L713">            carId = obj.getInt(&quot;carId&quot;);</span>
+<span class="fc" id="L714">            System.out.println(carId);</span>
+<span class="fc" id="L715">        } catch (JSONException e) {</span>
+<span class="fc" id="L716">            carId = -1;</span>
+<span class="fc" id="L717">            System.out.println(&quot;No Car Trip&quot;);</span>
+<span class="fc" id="L718">        }</span>
+
+
+<span class="fc bfc" id="L721" title="All 2 branches covered.">        if (carId != -1) {</span>
+<span class="fc" id="L722">            car = new Integer(carId);</span>
+        }
+
+<span class="fc" id="L725">        return new TripClass(obj.getString(&quot;type&quot;),</span>
+<span class="fc" id="L726">                obj.getString(&quot;source&quot;),</span>
+<span class="fc" id="L727">                obj.getString(&quot;destination&quot;), distance,</span>
+<span class="fc" id="L728">                new Timestamp(System.currentTimeMillis()),</span>
+                car);
+    }
+
+    ////////////////////////////////////
+    //             TRIPS              //
+    ////////////////////////////////////
+
+    /**
+     * Mapping store a new trip in the database.
+     * The trips are classified in:
+     * - Car
+     * - Plane
+     * - Public Transportation
+     * - Bike or Walking
+     *
+     * @param payload  - TripClass instance from the client to store
+     * @param username - of the user storing the trip
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/storeTrip&quot;, method = RequestMethod.POST)
+    public ResponseEntity&lt;ResponseClass&gt; storeTrip(
+            @RequestBody final String payload,
+            @PathVariable String username) throws InterruptedException, ApiException, IOException {
+<span class="fc" id="L752">        ResponseClass out = new ResponseClass();</span>
+
+<span class="fc" id="L754">        TripClass tripToStore = transformTripClass(payload);</span>
+
+<span class="fc bfc" id="L756" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) == null) {</span>
+<span class="fc" id="L757">            out.setPayload(&quot;Username does not exist&quot;);</span>
+<span class="fc" id="L758">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+
+<span class="fc" id="L761">        tripToStore.setDate(new Timestamp(System.currentTimeMillis()));</span>
+
+<span class="fc" id="L763">        String tripType = tripToStore.getType();</span>
+<span class="fc" id="L764">        int userId = loginRepo.findByUsername(username).getId();</span>
+
+<span class="fc bfc" id="L766" title="All 2 branches covered.">        if (tripType.contains(&quot;Car&quot;)) {</span>
+<span class="fc" id="L767">            Integer carId = tripToStore.getCarId();</span>
+
+            //Check car exists and belongs to the user
+<span class="fc bfc" id="L770" title="All 4 branches covered.">            if (carId != null &amp;&amp; carRepository.findById(carId.intValue()) != null</span>
+<span class="fc bfc" id="L771" title="All 2 branches covered.">                    &amp;&amp; carService.getUserId(carId.intValue()) == userId) {</span>
+
+<span class="fc" id="L773">                System.out.println(&quot;Reached Here&quot;);</span>
+
+<span class="fc bfc" id="L775" title="All 2 branches covered.">                if (tripToStore.getDistance() == 0) {</span>
+<span class="fc" id="L776">                    tripToStore.setDistance(transportationApi.getDriveDist(</span>
+<span class="fc" id="L777">                            tripToStore.getSource(),</span>
+<span class="fc" id="L778">                            tripToStore.getDestination()));</span>
+                }
+<span class="fc" id="L780">                tripRepository.save(tripToStore);</span>
+<span class="fc" id="L781">                int tripId = tripToStore.getId();</span>
+<span class="fc" id="L782">                userTripRepository.save(new UserTripClass(tripId, userId));</span>
+
+<span class="fc" id="L784">                int rawScore = co2Calculator.getEmission(tripToStore) * 100;</span>
+<span class="fc" id="L785">                int score = (int) Math.ceil(averageTransporationConsumptionByKm</span>
+<span class="fc" id="L786">                        * tripToStore.getDistance() * 0.1 - rawScore);</span>
+<span class="fc" id="L787">                LeaderboardClass newScore = new LeaderboardClass(userId,</span>
+<span class="fc" id="L788">                        leaderboardRepository.findById(userId).getScore() + score);</span>
+<span class="fc" id="L789">                leaderboardRepository.save(newScore);</span>
+
+<span class="fc" id="L791">                out.setPayload(&quot;Car trip stored&quot;);</span>
+<span class="fc" id="L792">                return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+            } else {
+<span class="fc" id="L794">                out.setPayload(&quot;Car does not exist or&quot;</span>
+                        + &quot; does not belong to the user&quot;
+                        + &quot;or Car ID is not specified&quot;);
+
+<span class="fc" id="L798">                System.out.println(&quot;Car Transportation Error...&quot;);</span>
+<span class="fc" id="L799">                return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+            }
+        } else {
+
+<span class="fc" id="L803">            return handleNonCarTrip(tripToStore, out, userId);</span>
+        }
+    }
+
+    /**
+     * Computes different kind of distances based on the API.
+     * Only if the distance given by the client is 0 (no input)
+     * The different transportation types are:
+     * - Car
+     * - Plane
+     * - Bike or Walk, considered taking the same distance
+     * @param tripToStore - trip info
+     * @param out - message to client
+     * @param userId 0 ID of a user
+     */
+    private ResponseEntity&lt;ResponseClass&gt; handleNonCarTrip(TripClass tripToStore,
+                                                           ResponseClass out, int userId)
+            throws InterruptedException, ApiException, IOException {
+
+<span class="fc bfc" id="L822" title="All 2 branches covered.">        if (tripToStore.getDistance() == 0) {</span>
+<span class="fc bfc" id="L823" title="All 2 branches covered.">            if (tripToStore.getType().contains(&quot;Plane&quot;)) {</span>
+<span class="fc" id="L824">                tripToStore.setDistance(transportationApi.getFlightDist(</span>
+<span class="fc" id="L825">                        tripToStore.getSource(),</span>
+<span class="fc" id="L826">                        tripToStore.getDestination()));</span>
+<span class="fc bfc" id="L827" title="All 2 branches covered.">            } else if (tripToStore.getType().contains(&quot;PubTrans&quot;)) {</span>
+<span class="fc" id="L828">                tripToStore.setDistance(transportationApi.getTransitDist(</span>
+<span class="fc" id="L829">                        tripToStore.getSource(),</span>
+<span class="fc" id="L830">                        tripToStore.getDestination()));</span>
+<span class="fc bfc" id="L831" title="All 2 branches covered.">            } else if (tripToStore.getType().contains(&quot;BikeWalk&quot;)) {</span>
+<span class="fc" id="L832">                tripToStore.setDistance(transportationApi.getCycleDist(</span>
+<span class="fc" id="L833">                        tripToStore.getSource(),</span>
+<span class="fc" id="L834">                        tripToStore.getDestination()));</span>
+            }
+        }
+
+<span class="fc" id="L838">        tripRepository.save(tripToStore);</span>
+<span class="fc" id="L839">        int tripId = tripToStore.getId();</span>
+<span class="fc" id="L840">        userTripRepository.save(new UserTripClass(tripId, userId));</span>
+
+<span class="fc" id="L842">        int rawScore = co2Calculator.getEmission(tripToStore);</span>
+
+<span class="fc" id="L844">        System.out.println(rawScore);</span>
+
+<span class="fc" id="L846">        int score = (int) Math.ceil(averageTransporationConsumptionByKm</span>
+<span class="fc" id="L847">                                    * tripToStore.getDistance() / 1000 - rawScore);</span>
+
+<span class="fc" id="L849">        System.out.println(score);</span>
+
+<span class="fc" id="L851">        LeaderboardClass newScore = new LeaderboardClass(userId,</span>
+<span class="fc" id="L852">                leaderboardRepository.findById(userId).getScore() + score);</span>
+<span class="fc" id="L853">        leaderboardRepository.save(newScore);</span>
+
+<span class="fc" id="L855">        out.setPayload(&quot;Trip stored&quot;);</span>
+<span class="fc" id="L856">        return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+    }
+
+    /**
+     * This mapping deletes a trip from the database using a GET request.
+     * The Client needs to specify the id of the trip to delete in
+     * the URL when making the request.
+     *
+     * @param id of the trip to delete
+     * @return
+     */
+    @RequestMapping(value = &quot;/{id}/deleteTrip&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;ResponseClass&gt; deleteTrip(
+            @PathVariable int id) {
+<span class="fc" id="L870">        ResponseClass out = new ResponseClass();</span>
+<span class="fc" id="L871">        System.out.print(tripRepository.findById(id));</span>
+<span class="fc bfc" id="L872" title="All 2 branches covered.">        if (tripRepository.findById(id) != null) {</span>
+<span class="fc" id="L873">            userTripRepository.deleteById(id);</span>
+<span class="fc" id="L874">            tripRepository.deleteById(id);</span>
+<span class="fc" id="L875">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L876">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L878">            out.setPayload(&quot;Trip id is not stored in the database&quot;);</span>
+<span class="fc" id="L879">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This mapping returns the user a list of all trips.
+     *
+     * @param username of the user to retrieve trips of.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/getAllTrips&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;TripToClient&gt; getAllTrips(@PathVariable String username) {
+<span class="fc" id="L891">        TripToClient allTrips = new TripToClient();</span>
+<span class="fc bfc" id="L892" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L893">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L894">            List&lt;UserTripClass&gt; listTripIds = userTripService.getListTripByUser(userId);</span>
+<span class="fc bfc" id="L895" title="All 2 branches covered.">            for (UserTripClass mapTrip : listTripIds) {</span>
+<span class="fc" id="L896">                allTrips.getTrips().add(tripRepository.findById(mapTrip.getTripId()));</span>
+<span class="fc" id="L897">            }</span>
+<span class="fc" id="L898">            return new ResponseEntity&lt;TripToClient&gt;(allTrips, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L900">            return new ResponseEntity&lt;TripToClient&gt;(allTrips, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    ////////////////////////////////////
+    //             FRIEND             //
+    ////////////////////////////////////
+
+    /**
+     * This mapping receives a POST request and stores the friendship.
+     * relationship in the database.
+     *
+     * @param friendToStore : JSON containing a String with the friend's username
+     * @param username      : of the user adding friend
+     * @return : HTTP200 if friend is stored, HTTP400 if the friend username does not exist
+     */
+    @RequestMapping(value = &quot;/{username}/storeFriend&quot;, method = RequestMethod.POST)
+    public final ResponseEntity&lt;ResponseClass&gt; friend(
+            @RequestBody final UserFriendsPostClass friendToStore, @PathVariable String username) {
+<span class="fc" id="L919">        ResponseClass out = new ResponseClass();</span>
+<span class="fc bfc" id="L920" title="All 2 branches covered.">        if (loginRepo.findByUsername(friendToStore.getFriend()) != null</span>
+<span class="fc bfc" id="L921" title="All 2 branches covered.">                &amp;&amp; loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L922">            int user1Id = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L923">            int userId2 = loginRepo.findByUsername(friendToStore.getFriend()).getId();</span>
+<span class="fc" id="L924">            UserFriendsClass userFriends = new UserFriendsClass(user1Id, userId2);</span>
+<span class="fc" id="L925">            userFriendsRepo.save(userFriends);</span>
+<span class="fc" id="L926">            out.setPayload(&quot;Friend stored&quot;);</span>
+<span class="fc" id="L927">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        }
+<span class="fc" id="L929">        out.setPayload(&quot;Friend does not exist&quot;);</span>
+<span class="fc" id="L930">        return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+    }
+
+    /**
+     * This mapping returns a list of Friends of the user.
+     *
+     * @param username of the user to retrieve friends.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/getAllFriends&quot;, method = RequestMethod.GET)
+    public final ResponseEntity&lt;UserFriendsToClient&gt; getFriends(
+            @PathVariable String username) {
+<span class="fc" id="L942">        List&lt;String&gt; out = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L943">        UserFriendsToClient friends = new UserFriendsToClient(out);</span>
+<span class="fc bfc" id="L944" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L945">            int id = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L946">            List&lt;Integer&gt; listIds = userFriendsService.getListFriendsId(id);</span>
+<span class="fc bfc" id="L947" title="All 2 branches covered.">            for (Integer friendId : listIds) {</span>
+<span class="fc" id="L948">                out.add(loginRepo.findById(friendId.intValue()).getUsername());</span>
+<span class="fc" id="L949">            }</span>
+<span class="fc" id="L950">            return new ResponseEntity&lt;UserFriendsToClient&gt;(friends, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L952">            return new ResponseEntity&lt;UserFriendsToClient&gt;(friends, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * Mapping to delete friendship.
+     *
+     * @param friendToDelete - userFriendPostClass containing String of username
+     * @return
+     */
+    @RequestMapping(value = &quot;{username}/deleteFriend&quot;, method = RequestMethod.POST)
+    public final ResponseEntity&lt;ResponseClass&gt; deleteFriend(
+            @RequestBody final UserFriendsPostClass friendToDelete,
+            @PathVariable String username) {
+<span class="fc" id="L966">        ResponseClass out = new ResponseClass();</span>
+<span class="fc bfc" id="L967" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null</span>
+<span class="fc bfc" id="L968" title="All 2 branches covered.">                &amp;&amp; loginRepo.findByUsername(friendToDelete.getFriend()) != null) {</span>
+<span class="fc" id="L969">            int userId1 = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L970">            int userId2 = loginRepo.findByUsername(friendToDelete.getFriend()).getId();</span>
+<span class="fc" id="L971">            UserFriendsClass friendshipToDelete = new UserFriendsClass(userId1, userId2);</span>
+<span class="fc" id="L972">            userFriendsRepo.delete(friendshipToDelete);</span>
+<span class="fc" id="L973">            out.setPayload(&quot;Friendship deleted&quot;);</span>
+<span class="fc" id="L974">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L976">            out.setPayload(&quot;Friendship does not exist&quot;);</span>
+<span class="fc" id="L977">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    ////////////////////////////////////
+    //            SETTINGS            //
+    ////////////////////////////////////
+
+    /**
+     * This mapping adds new Settings in the database.
+     *
+     * @param settingsToStore - settings Class
+     * @param username        of the user to store Settings info
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/storeSettings&quot;, method = RequestMethod.POST)
+    public ResponseEntity&lt;ResponseClass&gt; storeSettings(
+            @RequestBody final SettingsClass settingsToStore,
+            @PathVariable String username) {
+<span class="fc bfc" id="L996" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L997">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L998">            settingsToStore.setUserId(userId);</span>
+<span class="fc" id="L999">            settingsRepository.save(settingsToStore);</span>
+<span class="fc" id="L1000">            ResponseClass out = new ResponseClass(&quot;OK&quot;);</span>
+<span class="fc" id="L1001">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1003">            ResponseClass out = new ResponseClass(&quot;Username does not exist&quot;);</span>
+<span class="fc" id="L1004">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This mapping provides the client with settings information of the user.
+     *
+     * @param username of the user to retrieve settingsInfo
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/getSettings&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;SettingsClass&gt; getSettings(
+            @PathVariable String username) {
+<span class="fc" id="L1017">        SettingsClass settingsToSend = new SettingsClass();</span>
+<span class="fc bfc" id="L1018" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1019">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1020">            settingsToSend = settingsRepository.findById(userId);</span>
+<span class="fc" id="L1021">            return new ResponseEntity&lt;SettingsClass&gt;(settingsToSend, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1023">            return new ResponseEntity&lt;SettingsClass&gt;(settingsToSend, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    ////////////////////////////////////
+    //          ACHIEVEMENTS          //
+    ////////////////////////////////////
+
+    /**
+     * This mapping returns a list of all achievements.
+     *
+     * @return
+     */
+    @RequestMapping(value = &quot;/getAllAchievements&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;AchievementsToClient&gt; getAllAchievements() {
+<span class="nc" id="L1038">        AchievementsToClient toClient = new AchievementsToClient();</span>
+<span class="nc" id="L1039">        toClient.setAchievements(achievementsRepository.findAll());</span>
+<span class="nc" id="L1040">        return new ResponseEntity&lt;AchievementsToClient&gt;(toClient, HttpStatus.OK);</span>
+    }
+
+    /**
+     * This mapping returns the client information about an achievement.
+     *
+     * @param id of the achievement to retrieve information about.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{id}/getAchievement&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;AchievementsClass&gt; getAchievement(
+            @PathVariable int id) {
+<span class="fc bfc" id="L1052" title="All 2 branches covered.">        if (achievementsRepository.findById(id) != null) {</span>
+<span class="fc" id="L1053">            return new ResponseEntity&lt;AchievementsClass&gt;(achievementsRepository.findById(id),</span>
+                    HttpStatus.OK);
+        } else {
+<span class="fc" id="L1056">            return new ResponseEntity&lt;AchievementsClass&gt;(new AchievementsClass(),</span>
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Mapping returns List of AchievementsID obtained by the user.
+     *
+     * @param username of the user to get achievements of.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/getAllAchievements&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;AchievementsToClient&gt; getAllAchievementsByUser(
+            @PathVariable String username) {
+<span class="fc" id="L1070">        AchievementsToClient classToClient = new AchievementsToClient();</span>
+<span class="fc bfc" id="L1071" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1072">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1073">            List&lt;UserAchievementsClass&gt; listAchId = userAchievementsService</span>
+<span class="fc" id="L1074">                    .getAchievementsIdByUserId(userId);</span>
+<span class="fc bfc" id="L1075" title="All 2 branches covered.">            for (UserAchievementsClass next : listAchId) {</span>
+<span class="fc" id="L1076">                classToClient.getAchievements().add(achievementsRepository</span>
+<span class="fc" id="L1077">                        .findById(next.getAchievementsId()));</span>
+<span class="fc" id="L1078">            }</span>
+<span class="fc" id="L1079">            return new ResponseEntity&lt;AchievementsToClient&gt;(classToClient, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1081">            return new ResponseEntity&lt;AchievementsToClient&gt;(classToClient,</span>
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * This mapping allows the Client to store an achievement of the user.
+     *
+     * @param fromClient - userAchievement Object from Client
+     * @return
+     */
+    @RequestMapping(value = &quot;/storeAchievement&quot;, method = RequestMethod.POST)
+    public ResponseEntity&lt;ResponseClass&gt; addAchievement(
+            @RequestBody UserAchievementsClass fromClient) {
+<span class="fc" id="L1095">        ResponseClass out = new ResponseClass();</span>
+<span class="fc" id="L1096">        int achievementId = fromClient.getAchievementsId();</span>
+<span class="fc bfc" id="L1097" title="All 2 branches covered.">        if (loginRepo.findById(fromClient.getUserId()) != null</span>
+<span class="fc bfc" id="L1098" title="All 2 branches covered.">                &amp;&amp; achievementsRepository.findById(achievementId) != null) {</span>
+<span class="fc" id="L1099">            userAchievementsRepository.save(fromClient);</span>
+<span class="fc" id="L1100">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L1101">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1103">            out.setPayload(&quot;Incorrect information&quot;);</span>
+<span class="fc" id="L1104">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This mapping returns the progress of a user wrt a specific achievement.
+     *
+     * @param username of the user to check progress.
+     * @param achId    of the achievement to check.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/{achId}/getProgress&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;Integer&gt; getProgress(
+            @PathVariable String username,
+            @PathVariable int achId) {
+<span class="fc bfc" id="L1119" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1120">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc bfc" id="L1121" title="All 2 branches covered.">            if (achievementsRepository.findById(achId) != null) {</span>
+<span class="fc bfc" id="L1122" title="All 2 branches covered.">                if (userAchievementsRepository.findByUserIdAndAchievementsId(userId,</span>
+                        achId) != null) {
+<span class="fc" id="L1124">                    int progress = userAchievementsRepository</span>
+<span class="fc" id="L1125">                            .findByUserIdAndAchievementsId(userId, achId).getProgress();</span>
+<span class="fc" id="L1126">                    return new ResponseEntity&lt;&gt;(new Integer(progress), HttpStatus.OK);</span>
+                } else {
+<span class="fc" id="L1128">                    return new ResponseEntity&lt;&gt;(new Integer(0), HttpStatus.BAD_REQUEST);</span>
+                }
+            } else {
+<span class="fc" id="L1131">                return new ResponseEntity&lt;&gt;(new Integer(0), HttpStatus.BAD_REQUEST);</span>
+            }
+        } else {
+<span class="fc" id="L1134">            return new ResponseEntity&lt;&gt;(new Integer(0), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This mapping stores the progress of a user in the userAchievementRepository.
+     *
+     * @param username of the user to store progress.
+     * @param achId    of the achievement to store progress related to.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/{achId}/{progress}/setProgress&quot;,
+            method = RequestMethod.GET)
+    public ResponseEntity&lt;ResponseClass&gt; setProgress(
+            @PathVariable String username,
+            @PathVariable int achId,
+            @PathVariable int progress) {
+<span class="fc bfc" id="L1151" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1152">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc bfc" id="L1153" title="All 2 branches covered.">            if (achievementsRepository.findById(achId) != null) {</span>
+<span class="fc" id="L1154">                UserAchievementsClass userAch = new UserAchievementsClass(userId, achId, progress);</span>
+<span class="fc" id="L1155">                userAchievementsRepository.save(userAch);</span>
+<span class="fc" id="L1156">                return new ResponseEntity&lt;&gt;(new ResponseClass(&quot;Progress is stored&quot;),</span>
+                        HttpStatus.OK);
+            } else {
+<span class="fc" id="L1159">                return new ResponseEntity&lt;&gt;(new ResponseClass(&quot;Achievement does not exist&quot;),</span>
+                        HttpStatus.BAD_REQUEST);
+            }
+        } else {
+<span class="fc" id="L1163">            return new ResponseEntity&lt;&gt;(new ResponseClass(&quot;User does not exist&quot;),</span>
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    ////////////////////////////////////
+    //             BADGES             //
+    ////////////////////////////////////
+
+    /**
+     * This mapping returns a list of all badges.
+     *
+     * @return
+     */
+    @RequestMapping(value = &quot;/getAllBadges&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;BadgesToClient&gt; getAllBadges() {
+<span class="nc" id="L1179">        BadgesToClient toClient = new BadgesToClient();</span>
+<span class="nc" id="L1180">        toClient.setBadges(badgesRepository.findAll());</span>
+<span class="nc" id="L1181">        return new ResponseEntity&lt;BadgesToClient&gt;(toClient, HttpStatus.OK);</span>
+    }
+
+    /**
+     * This mapping retrieves a Badge class by Id.
+     *
+     * @param id of the badge to Retrieve
+     * @return
+     */
+    @RequestMapping(value = &quot;/{id}/getBadge&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;BadgesClass&gt; getBadge(
+            @PathVariable int id) {
+<span class="fc bfc" id="L1193" title="All 2 branches covered.">        if (badgesRepository.findById(id) != null) {</span>
+<span class="fc" id="L1194">            return new ResponseEntity&lt;BadgesClass&gt;(badgesRepository.findById(id), HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1196">            return new ResponseEntity&lt;BadgesClass&gt;(new BadgesClass(), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * Mapping returns List of BadgesID obtained by the user.
+     *
+     * @param username of the user to retrieve information about.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/getAllBadges&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;BadgesToClient&gt; getAllBadgesId(
+            @PathVariable String username) {
+<span class="fc" id="L1209">        BadgesToClient classToClient = new BadgesToClient();</span>
+<span class="fc bfc" id="L1210" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1211">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1212">            List&lt;UserBadgesClass&gt; badgesId = userBadgesService.getBadgesIdByUserId(userId);</span>
+<span class="fc bfc" id="L1213" title="All 2 branches covered.">            for (UserBadgesClass next : badgesId) {</span>
+<span class="fc" id="L1214">                classToClient.getBadges().add(badgesRepository.findById(next.getBadgesId()));</span>
+<span class="fc" id="L1215">            }</span>
+<span class="fc" id="L1216">            return new ResponseEntity&lt;BadgesToClient&gt;(classToClient, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1218">            return new ResponseEntity&lt;BadgesToClient&gt;(classToClient, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This mapping allows the Client to store a Badge achieved by the user.
+     *
+     * @param fromClient - UserBadgeClass to store in the DB.
+     *                   See the class for more info about parameters.
+     * @return
+     */
+    @RequestMapping(value = &quot;/storeBadges&quot;, method = RequestMethod.POST)
+    public ResponseEntity&lt;ResponseClass&gt; addBadge(
+            @RequestBody UserBadgesClass fromClient) {
+<span class="fc" id="L1232">        ResponseClass out = new ResponseClass();</span>
+<span class="fc" id="L1233">        int badgesId = fromClient.getBadgesId();</span>
+<span class="fc bfc" id="L1234" title="All 2 branches covered.">        if (loginRepo.findById(fromClient.getUserId()) != null</span>
+<span class="fc bfc" id="L1235" title="All 2 branches covered.">                &amp;&amp; badgesRepository.findById(badgesId) != null) {</span>
+<span class="fc" id="L1236">            userBadgesRepository.save(fromClient);</span>
+<span class="fc" id="L1237">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L1238">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1240">            out.setPayload(&quot;Incorrect information&quot;);</span>
+<span class="fc" id="L1241">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+
+    ////////////////////////////////////
+    //            UTILITIES           //
+    ////////////////////////////////////
+
+    /**
+     * This mapping returns an Utility by its ID.
+     *
+     * @param id of the utility
+     * @return
+     */
+    @RequestMapping(value = &quot;/{id}/getUtilities&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;UtilitiesClass&gt; getUtilities(
+            @PathVariable int id) {
+<span class="fc bfc" id="L1259" title="All 2 branches covered.">        if (utilitiesRepository.findById(id) != null) {</span>
+<span class="fc" id="L1260">            return new ResponseEntity&lt;UtilitiesClass&gt;(utilitiesRepository.findById(id),</span>
+                    HttpStatus.OK);
+        } else {
+<span class="fc" id="L1263">            return new ResponseEntity&lt;UtilitiesClass&gt;(new UtilitiesClass(),</span>
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * This mapping returns the client a list of utilities ID.
+     *
+     * @param username of the user to retrieve information about.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/getAllUtilitiesId&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;UtilitiesToClient&gt; getAllUtilitiesId(
+            @PathVariable String username) {
+<span class="fc" id="L1277">        UtilitiesToClient classToClient = new UtilitiesToClient();</span>
+<span class="fc bfc" id="L1278" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1279">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1280">            List&lt;UserUtilitiesClass&gt; listUtilitiesId = userUtilitiesService</span>
+<span class="fc" id="L1281">                    .getUtilitiesByUserId(userId);</span>
+<span class="fc bfc" id="L1282" title="All 2 branches covered.">            for (UserUtilitiesClass next : listUtilitiesId) {</span>
+<span class="fc" id="L1283">                classToClient.getUtilities().add(utilitiesRepository</span>
+<span class="fc" id="L1284">                        .findById(next.getUtilitiesId()));</span>
+<span class="fc" id="L1285">            }</span>
+<span class="fc" id="L1286">            return new ResponseEntity&lt;UtilitiesToClient&gt;(classToClient, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1288">            return new ResponseEntity&lt;UtilitiesToClient&gt;(classToClient,</span>
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * This mapping allows the Client to store utilities of the user.
+     *
+     * @param utilitiesFromClient - utilities Object from Client
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/storeUtilities&quot;, method = RequestMethod.POST)
+    public ResponseEntity&lt;ResponseClass&gt; storeUtilities(
+            @RequestBody UtilitiesFromClient utilitiesFromClient,
+            @PathVariable String username) {
+<span class="fc" id="L1303">        ResponseClass out = new ResponseClass();</span>
+<span class="fc bfc" id="L1304" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1305">            utilitiesFromClient.setDate(new Timestamp(System.currentTimeMillis()));</span>
+            //System.out.println(utilitiesFromClient.getDate());
+
+<span class="fc" id="L1308">            UtilitiesClass fromClient = new UtilitiesClass(</span>
+<span class="fc" id="L1309">                    utilitiesFromClient.getElectricityBill(),</span>
+<span class="fc" id="L1310">                    utilitiesFromClient.getCleanEnergyPercentage(),</span>
+<span class="fc" id="L1311">                    utilitiesFromClient.getWatersewage(),</span>
+<span class="fc" id="L1312">                    utilitiesFromClient.getNatgas(),</span>
+<span class="fc" id="L1313">                    utilitiesFromClient.getRoomTemp(),</span>
+<span class="fc" id="L1314">                    utilitiesFromClient.getDate());</span>
+
+<span class="fc" id="L1316">            System.out.println(fromClient.toString());</span>
+
+<span class="fc" id="L1318">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1319">            utilitiesRepository.save(fromClient);</span>
+<span class="fc" id="L1320">            int utilitiesId = fromClient.getId();</span>
+<span class="fc" id="L1321">            userUtilitiesRepository.save(new UserUtilitiesClass(userId,</span>
+                    utilitiesId));
+
+            int housingSquareFeet;
+
+            try {
+<span class="fc" id="L1327">                housingSquareFeet = (int) (settingsRepository</span>
+<span class="fc" id="L1328">                        .findById(userId).getLivingSpace() * 10.764);</span>
+
+<span class="fc bfc" id="L1330" title="All 2 branches covered.">                if (housingSquareFeet &lt; 10) {</span>
+<span class="fc" id="L1331">                    housingSquareFeet = 506;</span>
+                }
+<span class="nc" id="L1333">            } catch (NullPointerException e) {</span>
+<span class="nc" id="L1334">                System.out.println(&quot;null point in housing square feet.&quot;);</span>
+<span class="nc" id="L1335">                housingSquareFeet = 506;</span>
+<span class="fc" id="L1336">            }</span>
+
+<span class="fc" id="L1338">            SettingsClass settingsOfClient = settingsRepository.findById(userId);</span>
+
+            //utilities score
+            //Create food score
+
+<span class="fc" id="L1343">            UtilitiesData defaultUtilities = new UtilitiesData(housingSquareFeet,</span>
+                    defaultElectricity, defaultGas, defaultWater, defaultPerCleanEnergy,
+<span class="fc" id="L1345">                    settingsOfClient.getGasPrice(), settingsOfClient.getNatGasPrice());</span>
+
+<span class="fc" id="L1347">            UtilitiesData utilitiesData = new UtilitiesData(housingSquareFeet,</span>
+<span class="fc" id="L1348">                    fromClient.getElectricity(), fromClient.getGas(), fromClient.getWater(),</span>
+<span class="fc" id="L1349">                    fromClient.getPerCleanEnergy(), settingsOfClient.getGasPrice(),</span>
+<span class="fc" id="L1350">                    settingsOfClient.getNatGasPrice());</span>
+
+<span class="fc" id="L1352">            FoodData foodData = new FoodData(0, 0, 0, 0, 0);</span>
+
+<span class="fc" id="L1354">            int defaultScore = connection.getTotal(&quot;result_housing_total&quot;,</span>
+<span class="fc" id="L1355">                    1, (int) settingsOfClient.getElectricityPrice(),</span>
+                    defaultUtilities, foodData);
+
+<span class="fc" id="L1358">            int rawScore = connection.getTotal(&quot;result_housing_total&quot;, 1,</span>
+<span class="fc" id="L1359">                    (int) settingsOfClient.getElectricityPrice(),</span>
+                    utilitiesData, foodData);
+
+<span class="fc" id="L1362">            int score = defaultScore - rawScore;</span>
+
+<span class="fc bfc" id="L1364" title="All 2 branches covered.">            if (utilitiesFromClient.isSolarPanels()) {</span>
+<span class="fc" id="L1365">                score = (3 * score) / 4;</span>
+            }
+
+<span class="fc" id="L1368">            System.out.println(&quot;SCORE IS HERE: &quot; + score);</span>
+
+<span class="fc" id="L1370">            LeaderboardClass newScore = new LeaderboardClass(userId,</span>
+<span class="fc" id="L1371">                    leaderboardRepository.findById(userId).getScore() + score);</span>
+<span class="fc" id="L1372">            leaderboardRepository.save(newScore);</span>
+<span class="fc" id="L1373">            System.out.println(&quot;Score Saved in leaderboard.&quot;);</span>
+
+<span class="fc" id="L1375">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L1376">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1378">            out.setPayload(&quot;Invalid username&quot;);</span>
+<span class="fc" id="L1379">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    ////////////////////////////////////
+    //           LEADERBOARD          //
+    ////////////////////////////////////
+
+    /**
+     * Returns the client a leaderboard sorted by users score.
+     * The sorting is done on the client.
+     * The length of the returned list does not exceed 100.
+     *
+     * @return
+     */
+    @RequestMapping(value = &quot;/getLeaderboard&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;List&lt;LeaderboardClass&gt;&gt; getLeaderboard() {
+<span class="fc" id="L1396">        List&lt;LeaderboardClass&gt; leaderboardToReturn = leaderboardRepository.findAll();</span>
+<span class="fc" id="L1397">        Collections.sort(leaderboardToReturn, new Comparator&lt;LeaderboardClass&gt;() {</span>
+            @Override
+            public int compare(LeaderboardClass o1, LeaderboardClass o2) {
+<span class="fc bfc" id="L1400" title="All 2 branches covered.">                if (o1.getScore() &gt;= o2.getScore()) {</span>
+<span class="fc" id="L1401">                    return -1;</span>
+                } else {
+<span class="fc" id="L1403">                    return 1;</span>
+                }
+            }
+        });
+<span class="fc" id="L1407">        return new ResponseEntity&lt;List&lt;LeaderboardClass&gt;&gt;(leaderboardToReturn</span>
+<span class="fc" id="L1408">                .subList(0, Math.min(leaderboardToReturn.size(),</span>
+                        100)), HttpStatus.OK);
+    }
+
+    /**
+     * This mapping returns the friends Leaderboard of the user specified by username.
+     * The format is the following: each object contains:
+     * - Username of the friend
+     * - Score of the friend
+     *
+     * @return
+     */
+    @RequestMapping(value = &quot;{username}/getFriendsLeaderboard&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;List&lt;LeaderboardToClient&gt;&gt; getFriendsLeaderboard(
+            @PathVariable String username) {
+<span class="fc" id="L1423">        List&lt;LeaderboardClass&gt; leaderboard = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1424">        List&lt;LeaderboardToClient&gt; friendsLeaderboard = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L1426" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1427">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1428">            List&lt;Integer&gt; listFriends = userFriendsService.getListFriendsId(userId);</span>
+<span class="fc" id="L1429">            leaderboard = leaderboardRepository.findAll();</span>
+
+<span class="fc" id="L1431">            Collections.sort(leaderboard, new Comparator&lt;LeaderboardClass&gt;() {</span>
+                @Override
+                public int compare(LeaderboardClass o1, LeaderboardClass o2) {
+<span class="pc bpc" id="L1434" title="1 of 2 branches missed.">                    if (o1.getScore() &gt;= o2.getScore()) {</span>
+<span class="fc" id="L1435">                        return -1;</span>
+                    } else {
+<span class="nc" id="L1437">                        return 1;</span>
+                    }
+                }
+            });
+
+<span class="fc bfc" id="L1442" title="All 2 branches covered.">            for (LeaderboardClass userScore : leaderboard) {</span>
+<span class="fc bfc" id="L1443" title="All 2 branches covered.">                if (listFriends.contains(userScore.getUserId())) {</span>
+<span class="fc" id="L1444">                    friendsLeaderboard.add(new LeaderboardToClient(loginRepo</span>
+<span class="fc" id="L1445">                            .findById(userScore.getUserId()).getUsername(),</span>
+<span class="fc" id="L1446">                            userScore.getScore()));</span>
+                }
+<span class="fc" id="L1448">            }</span>
+
+<span class="fc bfc" id="L1450" title="All 2 branches covered.">            for (LeaderboardToClient l : friendsLeaderboard) {</span>
+<span class="fc" id="L1451">                System.out.println(l.getUsername());</span>
+<span class="fc" id="L1452">            }</span>
+
+<span class="fc" id="L1454">            return new ResponseEntity&lt;List&lt;LeaderboardToClient&gt;&gt;(friendsLeaderboard</span>
+<span class="fc" id="L1455">                    .subList(0, Math.min(friendsLeaderboard.size(),</span>
+                            100)), HttpStatus.OK);
+        } else {
+<span class="fc" id="L1458">            return new ResponseEntity&lt;List&lt;LeaderboardToClient&gt;&gt;(friendsLeaderboard,</span>
+                    HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * This mapping allows to update a user score in the leaderboard.
+     *
+     * @param username of the user to update to score of.
+     * @param score    to be inserted in the leaderboard.
+     * @return
+     */
+    @RequestMapping(value = &quot;{username}/{score}/updateLeaderboard&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;ResponseClass&gt; getFriendsLeaderboard(
+            @PathVariable String username,
+            @PathVariable int score) {
+<span class="fc" id="L1474">        ResponseClass out = new ResponseClass();</span>
+<span class="fc bfc" id="L1475" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1476">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1477">            leaderboardRepository.save(new LeaderboardClass(userId, score));</span>
+<span class="fc" id="L1478">            out.setPayload(&quot;OK&quot;);</span>
+<span class="fc" id="L1479">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1481">            out.setPayload(&quot;Incorrect username&quot;);</span>
+<span class="fc" id="L1482">            return new ResponseEntity&lt;ResponseClass&gt;(out, HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    /**
+     * This mappings returns the score of the user.
+     *
+     * @param username of the user to retrieve score of.
+     * @return
+     */
+    @RequestMapping(value = &quot;/{username}/getScore&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;Integer&gt; getUserScore(
+            @PathVariable String username
+    ) {
+<span class="fc bfc" id="L1496" title="All 2 branches covered.">        if (loginRepo.findByUsername(username) != null) {</span>
+<span class="fc" id="L1497">            int userId = loginRepo.findByUsername(username).getId();</span>
+<span class="fc" id="L1498">            Integer score = leaderboardRepository.findById(userId).getScore();</span>
+<span class="fc" id="L1499">            return new ResponseEntity&lt;Integer&gt;(score, HttpStatus.OK);</span>
+        } else {
+<span class="fc" id="L1501">            return new ResponseEntity&lt;Integer&gt;(new Integer(0), HttpStatus.BAD_REQUEST);</span>
+        }
+    }
+
+    ////////////////////////////////////
+    //              EXTRA             //
+    ////////////////////////////////////
+
+    /**
+     * This mapping returns a list of usernames similar to the one given in the path.
+     *
+     * @param start - Input string from the user to check in the DB.
+     * @return a list of String with usernames similar to the one given.
+     */
+    @RequestMapping(value = &quot;{start}/getUsernames&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;List&lt;String&gt;&gt; getUsernames(
+            @PathVariable String start
+    ) {
+<span class="fc" id="L1519">        List&lt;String&gt; similarUsers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1520">        List&lt;LoginClass&gt; listAllUsers = loginRepo.findAll();</span>
+<span class="fc bfc" id="L1521" title="All 2 branches covered.">        for (LoginClass user : listAllUsers) {</span>
+<span class="fc bfc" id="L1522" title="All 2 branches covered.">            if (user.getUsername().startsWith(start)) {</span>
+<span class="fc" id="L1523">                similarUsers.add(user.getUsername());</span>
+            }
+<span class="fc bfc" id="L1525" title="All 2 branches covered.">            if (similarUsers.size() &gt;= 10) {</span>
+<span class="fc" id="L1526">                break;</span>
+            }
+<span class="fc" id="L1528">        }</span>
+<span class="fc" id="L1529">        return new ResponseEntity&lt;List&lt;String&gt;&gt;(similarUsers, HttpStatus.OK);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

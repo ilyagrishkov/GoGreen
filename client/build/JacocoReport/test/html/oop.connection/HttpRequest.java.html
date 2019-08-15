@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.source.html" class="el_package">oop.connection</a> &gt; <span class="el_source">HttpRequest.java</span></div><h1>HttpRequest.java</h1><pre class="source lang-java linenums">package oop.connection;
+
+import oop.App;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+
+/**
+ * Class that creates and sends Http requests.
+ */
+public class HttpRequest {
+
+    /**
+     * Default user agent.
+     */
+    private static final String USER_AGENT = &quot;Mozilla/5.0&quot;;
+
+    /**
+     * The URL where the HTTPRequest should be sent.
+     */
+    private URL obj;
+
+    /**
+     * The connection that is sent.
+     */
+    private HttpURLConnection con;
+
+    /**
+     * Initializes the HTTP request and writes the headers.
+     *
+     * @param url the server URL to connect to
+     * @throws IOException Covers MalformedURLException, IOException,
+     *                     ProtocolException
+     */
+<span class="fc" id="L42">    public HttpRequest(final String url) throws IOException {</span>
+<span class="fc" id="L43">        App.log(Level.INFO, HttpRequest.class.getName(), &quot;Creating HttpRequest Object&quot;);</span>
+
+<span class="fc" id="L45">        obj = new URL(url);</span>
+<span class="fc" id="L46">        con = (HttpURLConnection) obj.openConnection();</span>
+
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Changes URL object and establishes a new connection.
+     *
+     * @param obj - URL to change to
+     * @throws MalformedURLException - if URL is wrong
+     */
+    public void changeUrl(URL obj) throws MalformedURLException {
+
+<span class="fc" id="L58">        this.obj = new URL(obj.toString());</span>
+        try {
+<span class="fc" id="L60">            this.con = (HttpURLConnection) obj.openConnection();</span>
+<span class="nc" id="L61">        } catch (IOException e) {</span>
+<span class="nc" id="L62">            e.printStackTrace();</span>
+<span class="fc" id="L63">        }</span>
+<span class="fc" id="L64">    }</span>
+
+    public URL getObj() {
+<span class="fc" id="L67">        return obj;</span>
+    }
+
+
+    /**
+     * Method that sends a POST request to web server.
+     *
+     * @param json the JSON data to be sent
+     * @return the response code received from server
+     * @throws IOException in case something goes wrong
+     */
+    public HttpData sendPost(final String json) throws IOException {
+
+        // Prepare connection for POST request
+<span class="fc" id="L81">        con.setRequestMethod(&quot;POST&quot;);</span>
+<span class="fc" id="L82">        con.setRequestProperty(&quot;User-Agent&quot;, USER_AGENT);</span>
+<span class="fc" id="L83">        con.setRequestProperty(&quot;Content-Type&quot;,</span>
+                &quot;application/json; charset=UTF-8&quot;);
+
+<span class="fc" id="L86">        App.log(Level.INFO, HttpRequest.class.getName(), &quot;Sending POST Request method&quot;);</span>
+
+        // Add JSON to the HTTP request
+<span class="fc" id="L89">        byte[] out = json.getBytes(StandardCharsets.UTF_8);</span>
+<span class="fc" id="L90">        int length = out.length;</span>
+
+<span class="fc" id="L92">        con.setFixedLengthStreamingMode(length);</span>
+<span class="fc" id="L93">        con.setDoOutput(true);</span>
+<span class="fc" id="L94">        try (OutputStream os = con.getOutputStream()) {</span>
+<span class="fc" id="L95">            os.write(out);</span>
+<span class="fc" id="L96">            App.log(Level.INFO, HttpRequest.class.getName(), &quot;Wrote to the output stream&quot;);</span>
+        }
+
+<span class="fc" id="L99">        OutputStream os = con.getOutputStream();</span>
+<span class="fc" id="L100">        os.flush();</span>
+<span class="fc" id="L101">        os.close();</span>
+
+        // Return response code
+<span class="fc" id="L104">        int responseCode = con.getResponseCode();</span>
+
+<span class="fc" id="L106">        BufferedReader in = new BufferedReader(</span>
+<span class="fc" id="L107">                new InputStreamReader(con.getInputStream()));</span>
+        String input;
+<span class="fc" id="L109">        StringBuffer response = new StringBuffer();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        while ((input = in.readLine()) != null) {</span>
+<span class="fc" id="L111">            response.append(input);</span>
+        }
+<span class="fc" id="L113">        in.close();</span>
+
+<span class="fc" id="L115">        System.out.println(&quot;POST Response Code :: &quot; + responseCode);</span>
+<span class="fc" id="L116">        App.log(Level.INFO, HttpRequest.class.getName(), &quot;POST Response Code::&quot; + responseCode);</span>
+<span class="fc" id="L117">        return new HttpData(responseCode, response.toString());</span>
+    }
+
+    /**
+     * Method that sends a GET request to web server.
+     *
+     * @return an HttpData containing the response message
+     * @throws IOException in case something goes wrong
+     */
+    public HttpData sendGet() throws IOException {
+
+<span class="nc" id="L128">        App.log(Level.INFO, HttpRequest.class.getName(), &quot;Sending GET Request method&quot;);</span>
+
+        // Prepare connection for GET request
+<span class="nc" id="L131">        con.setRequestMethod(&quot;GET&quot;);</span>
+<span class="nc" id="L132">        con.setRequestProperty(&quot;User-Agent&quot;, USER_AGENT);</span>
+
+
+<span class="nc" id="L135">        int responseCode = con.getResponseCode();</span>
+<span class="nc" id="L136">        System.out.println(&quot;\nSending 'GET' request to URL : &quot; + con.getURL());</span>
+
+<span class="nc" id="L138">        App.log(Level.INFO, HttpRequest.class.getName(), &quot;GET Response Code::&quot; + responseCode);</span>
+
+<span class="nc" id="L140">        BufferedReader in = new BufferedReader(</span>
+<span class="nc" id="L141">                new InputStreamReader(con.getInputStream()));</span>
+        String inputLine;
+<span class="nc" id="L143">        StringBuffer response = new StringBuffer();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        while ((inputLine = in.readLine()) != null) {</span>
+<span class="nc" id="L145">            response.append(inputLine);</span>
+        }
+<span class="nc" id="L147">        in.close();</span>
+
+        //print result
+<span class="nc" id="L150">        System.out.println(response.toString());</span>
+
+<span class="nc" id="L152">        return new HttpData(responseCode, response.toString());</span>
+
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,65 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+* {
+    -fx-font-family: "Marker";
+}
+
+#profileButton,
+#achievementsButton,
+#badgesButton,
+#leaderboardButton,
+#settingsButton {
+
+    -fx-background-color: null;
+    -fx-border-color: #61b73a;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-line-spacing: 100;
+    -fx-text-fill: #61b73a;
+    -fx-font-size: 30;
+}
+
+
+#profileButton:hover,
+#achievementsButton:hover,
+#badgesButton:hover,
+#leaderboardButton:hover,
+#settingsButton:hover {
+
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#profileButton:pressed,
+#achievementsButton:pressed,
+#badgesButton:pressed,
+#leaderboardButton:pressed,
+#settingsButton:pressed {
+
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-scale-y: 0.99;
+    -fx-scale-x: 0.99;
+}
+
+#profileButton:focused,
+#achievementsButton:focused,
+#badgesButton:focused,
+#leaderboardButton:focused,
+#settingsButton:focused {
+
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#profileButton:hover:focused,
+#achievementsButton:hover:focused,
+#badgesButton:hover:focused,
+#leaderboardButton:hover:focused,
+#settingsButton:hover:focused {
+
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}

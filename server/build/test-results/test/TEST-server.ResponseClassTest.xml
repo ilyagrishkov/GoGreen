@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="server.ResponseClassTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2019-04-14T20:59:05" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.0">
+  <properties/>
+  <testcase name="testingSetterPositive" classname="server.ResponseClassTest" time="0.0"/>
+  <testcase name="testingSetterNegative" classname="server.ResponseClassTest" time="0.0"/>
+  <testcase name="testingGetterPositive" classname="server.ResponseClassTest" time="0.0"/>
+  <testcase name="testingGetterNegative" classname="server.ResponseClassTest" time="0.0"/>
+  <testcase name="testingConstructor" classname="server.ResponseClassTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

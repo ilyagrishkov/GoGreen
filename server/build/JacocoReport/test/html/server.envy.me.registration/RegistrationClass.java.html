@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegistrationClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server.envy.me.registration</a> &gt; <span class="el_source">RegistrationClass.java</span></div><h1>RegistrationClass.java</h1><pre class="source lang-java linenums">package server.envy.me.registration;
+
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = &quot;userdata&quot;)
+public class RegistrationClass {
+
+    @Id
+    @Column(name = &quot;userid&quot;)
+    private int id;
+
+    /**
+     * Ignore username and password since they are being registered.
+     */
+    @Transient
+    private String username;
+
+    @Transient
+    private String password;
+
+    @Column(name = &quot;Surname&quot;)
+    private String lastname;
+
+    @Column(name = &quot;Forename&quot;)
+    private String firstname;
+
+    @Column(name = &quot;Birthday&quot;)
+    private Date dateofbirth;
+
+    @Column(name = &quot;Gender&quot;)
+    private String gender;
+
+    /**
+     * Class to contain the data coming from the registration form.
+     * @param username username of the user
+     * @param firstname first name user
+     * @param lastname last name user
+     * @param dateofbirth Date of birth user
+     * @param gender gender user
+     * @param password password to input in the Database.
+     */
+    public RegistrationClass(String username, String firstname,
+                             String lastname, Date dateofbirth,
+<span class="fc" id="L51">                             String gender, String password) {</span>
+<span class="fc" id="L52">        this.username = username;</span>
+<span class="fc" id="L53">        this.firstname = firstname;</span>
+<span class="fc" id="L54">        this.lastname = lastname;</span>
+<span class="fc" id="L55">        this.dateofbirth = dateofbirth;</span>
+<span class="fc" id="L56">        this.gender = gender;</span>
+<span class="fc" id="L57">        this.password = password;</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * For Deserialization purposes.
+     */
+<span class="fc" id="L63">    public RegistrationClass() {</span>
+<span class="fc" id="L64">    }</span>
+
+    public void setId(int id) {
+<span class="fc" id="L67">        this.id = id;</span>
+<span class="fc" id="L68">    }</span>
+
+    public int getId() {
+<span class="fc" id="L71">        return id;</span>
+    }
+
+    public String getUsername() {
+<span class="fc" id="L75">        return username;</span>
+    }
+
+    public void setUsername(String username) {
+<span class="fc" id="L79">        this.username = username;</span>
+<span class="fc" id="L80">    }</span>
+
+    public String getFirstname() {
+<span class="fc" id="L83">        return firstname;</span>
+    }
+
+    public void setFirstname(String firstname) {
+<span class="fc" id="L87">        this.firstname = firstname;</span>
+<span class="fc" id="L88">    }</span>
+
+    public String getLastname() {
+<span class="fc" id="L91">        return lastname;</span>
+    }
+
+    public void setLastname(String lastname) {
+<span class="fc" id="L95">        this.lastname = lastname;</span>
+<span class="fc" id="L96">    }</span>
+
+    public Date getDateofbirth() {
+<span class="fc" id="L99">        return dateofbirth;</span>
+    }
+
+    public void setDateofbirth(Date dateofbirth) {
+<span class="fc" id="L103">        this.dateofbirth = dateofbirth;</span>
+<span class="fc" id="L104">    }</span>
+
+    public String getGender() {
+<span class="fc" id="L107">        return gender;</span>
+    }
+
+    public void setGender(String gender) {
+<span class="fc" id="L111">        this.gender = gender;</span>
+<span class="fc" id="L112">    }</span>
+
+    /**
+     * Returns password of user.
+     * @return password stored in registration object
+     */
+    public String getPassword() {
+<span class="fc" id="L119">        return password;</span>
+    }
+
+    /**
+     * Sets the password of the user.
+     * @param password of the user
+     */
+    public void setPassword(String password) {
+<span class="fc" id="L127">        this.password = password;</span>
+<span class="fc" id="L128">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

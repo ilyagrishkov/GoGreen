@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+    id 'checkstyle'
+    id 'jacoco'
+}
+
+group 'test'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '5.0'
+}
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.json:json:20171018'
+    testCompile "org.mockito:mockito-core:2.1.0"
+    implementation 'com.google.code.gson:gson:2.8.5'
+    compile 'com.google.maps:google-maps-services:0.9.2'
+    testCompile 'junit:junit:4.12'
+    compile 'com.jfoenix:jfoenix:9.0.8'
+    implementation 'com.mashape.unirest:unirest-java:1.4.9'
+}
+
+
+jacoco {
+    toolVersion = "0.8.3"
+    reportsDir = file("$buildDir/JacocoReport")
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['oop/gui/**',
+                                        'oop/scenes/**'])
+        }))
+    }
+}
+
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    version = '11.0.2'
+}
+
+
+mainClassName = 'oop.App'

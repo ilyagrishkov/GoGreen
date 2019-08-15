@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.LeaderboardConnectionTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:14:59" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.074">
+  <properties/>
+  <testcase name="receiveFriendsNoUsernameTest" classname="oop.LeaderboardConnectionTest" time="0.057"/>
+  <testcase name="receiveFriendsInvalidTest" classname="oop.LeaderboardConnectionTest" time="0.002"/>
+  <testcase name="receiveFriendLeaderboardNoUsernameTest" classname="oop.LeaderboardConnectionTest" time="0.003"/>
+  <testcase name="receiveFriendsValidTest" classname="oop.LeaderboardConnectionTest" time="0.003"/>
+  <testcase name="receiveFriendLeaderboardValidFriendTest" classname="oop.LeaderboardConnectionTest" time="0.005"/>
+  <testcase name="receiveFriendLeaderboardWrongFriendTest" classname="oop.LeaderboardConnectionTest" time="0.002"/>
+  <system-out><![CDATA[[{"username":"user","score":200}]
+]]></system-out>
+  <system-err><![CDATA[Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+]]></system-err>
+</testsuite>

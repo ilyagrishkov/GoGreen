@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.HttpRequestTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:14:58" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.067">
+  <properties/>
+  <testcase name="testConnection" classname="oop.HttpRequestTest" time="0.066"/>
+  <testcase name="getObj" classname="oop.HttpRequestTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Apr 14, 2019 8:14:58 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:58 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:58 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+]]></system-err>
+</testsuite>

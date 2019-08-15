@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Connection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.source.html" class="el_package">oop.connection</a> &gt; <span class="el_source">Connection.java</span></div><h1>Connection.java</h1><pre class="source lang-java linenums">package oop.connection;
+
+import static java.lang.Integer.parseInt;
+
+import oop.App;
+import oop.details.AchievementDetails;
+import oop.details.BadgeDetails;
+import oop.details.CarDetails;
+import oop.details.FoodDetails;
+import oop.details.FriendDetails;
+import oop.details.LeaderboardDetails;
+import oop.details.LoginDetails;
+import oop.details.RegistrationDetails;
+import oop.details.SettingsDetails;
+import oop.details.TripDetails;
+import oop.details.UtilitiesDetails;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.logging.Level;
+
+public class Connection {
+
+    /**
+     * HTTPRequest OK code.
+     */
+    private static final int RESPONSE_OK = 200;
+
+<span class="fc" id="L30">    private static final String CLASS_NAME = Connection.class.getName();</span>
+
+    //private static String URL = &quot;http://env-y-me.herokuapp.com&quot;;
+<span class="fc" id="L33">    private static String URL = &quot;http://localhost:8080&quot;;</span>
+    public HttpRequest httpRequest;
+
+    /**
+     * Basic constructor for Connection class. Identifies HttpRequest
+     * to standard URL.
+     */
+<span class="fc" id="L40">    public Connection() {</span>
+        try {
+<span class="fc" id="L42">            this.httpRequest = new HttpRequest(URL);</span>
+
+<span class="nc" id="L44">        } catch (IOException e) {</span>
+<span class="nc" id="L45">            e.printStackTrace();</span>
+<span class="fc" id="L46">        }</span>
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Sends registration data to server.
+     *
+     * @param regDetails user details to check
+     * @return true if success, false otherwise
+     */
+    public final boolean registerUser(final oop.details.RegistrationDetails regDetails) {
+<span class="fc" id="L56">        App.log(Level.INFO, CLASS_NAME, &quot;Registering User&quot;);</span>
+
+        try {
+<span class="fc" id="L59">            httpRequest.changeUrl(new URL(URL + &quot;/registration&quot;));</span>
+
+<span class="fc" id="L61">            HttpData httpData = httpRequest.sendPost(regDetails.stringify());</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (httpData.getResponseCode()</span>
+                    == RESPONSE_OK) {
+<span class="fc" id="L65">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Registering User&quot;);</span>
+
+<span class="fc" id="L67">                return true;</span>
+            }
+
+<span class="fc" id="L70">            App.log(Level.WARNING, CLASS_NAME, &quot;Unsuccessful Posting to Server - Registering User&quot;);</span>
+
+<span class="fc" id="L72">            return false;</span>
+
+<span class="fc" id="L74">        } catch (IOException e) {</span>
+<span class="fc" id="L75">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Registering User&quot;);</span>
+
+<span class="fc" id="L77">            System.out.println(e);</span>
+<span class="fc" id="L78">            return false;</span>
+        }
+    }
+
+    /**
+     * Sends Utilities Details to the server.
+     *
+     * @param utilDetails utilities details of the client
+     * @return true or false; if it was successful or not
+     */
+    public final boolean sendUtilities(final oop.details.UtilitiesDetails utilDetails) {
+<span class="fc" id="L89">        App.log(Level.INFO, CLASS_NAME, &quot;Sending Utilities&quot;);</span>
+<span class="fc" id="L90">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L93">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L94">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L98">            HttpRequest httpRequest = new HttpRequest(URL + &quot;/&quot; + username + &quot;/storeUtilities&quot;);</span>
+
+<span class="fc" id="L100">            HttpData httpData = httpRequest.sendPost(utilDetails.stringify());</span>
+
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L103">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Utilities&quot;);</span>
+
+<span class="fc" id="L105">                return true;</span>
+            }
+<span class="nc" id="L107">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Utilities&quot;);</span>
+
+<span class="nc" id="L109">            return false;</span>
+<span class="fc" id="L110">        } catch (IOException e) {</span>
+<span class="fc" id="L111">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Utilities&quot;);</span>
+
+<span class="fc" id="L113">            System.out.println(e);</span>
+<span class="fc" id="L114">            return false;</span>
+        }
+    }
+
+    /**
+     * Retrieves a UtilitiesDetails arraylist from the server.
+     * @param username User's whose utilities to retrieve
+     * @return Returns an arraylist with UtilitiesDetails
+     */
+    public final ArrayList&lt;UtilitiesDetails&gt; receiveUtilities(final String username) {
+
+        try {
+<span class="fc" id="L126">            String shorturl = URL + &quot;/&quot; + username + &quot;/getAllUtilitiesId&quot;;</span>
+
+<span class="fc" id="L128">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L130">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L134">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L136">                ArrayList&lt;UtilitiesDetails&gt; utilitiesDetails = UtilitiesDetails.parse(</span>
+<span class="fc" id="L137">                        httpData.getData());</span>
+
+<span class="fc" id="L139">                return utilitiesDetails;</span>
+
+            }
+<span class="fc" id="L142">        } catch (IOException e) {</span>
+<span class="fc" id="L143">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving Food&quot;);</span>
+<span class="fc" id="L144">        }</span>
+
+<span class="fc" id="L146">        return null;</span>
+    }
+
+    /**
+     * Checks whether the username exists in the database.
+     *
+     * @param loginDetails user details to check
+     * @return id of the user, if found
+     */
+    public int authorizeUser(final LoginDetails loginDetails) {
+
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (loginDetails.getUsername() == null</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">                || loginDetails.getPassword() == null) {</span>
+<span class="fc" id="L159">            App.log(Level.WARNING, CLASS_NAME, &quot;LoginDetails are NULL&quot;);</span>
+<span class="fc" id="L160">            return -1;</span>
+        }
+
+        try {
+<span class="fc" id="L164">            httpRequest.changeUrl(new URL(URL + &quot;/authorization&quot;));</span>
+
+<span class="fc" id="L166">            HttpData httpData = httpRequest.sendPost(loginDetails.stringify());</span>
+
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            if (httpData.getResponseCode()</span>
+                    == RESPONSE_OK) {
+<span class="fc" id="L170">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Logging In User&quot;);</span>
+<span class="fc" id="L171">                return new LoginDetails().parseId(httpData.getData());</span>
+            }
+<span class="fc" id="L173">            App.log(Level.WARNING, CLASS_NAME, &quot;Unsuccessful Posting to  Server - Logging In User&quot;);</span>
+
+<span class="fc" id="L175">            return -1;</span>
+<span class="fc" id="L176">        } catch (IOException e) {</span>
+<span class="fc" id="L177">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Logging In User&quot;);</span>
+
+<span class="fc" id="L179">            System.out.println(e);</span>
+<span class="fc" id="L180">            return -1;</span>
+        }
+    }
+
+    /**
+     * Sends all the food details to the server.
+     *
+     * @param foodDetails food details
+     */
+    public boolean sendFood(final FoodDetails foodDetails) {
+
+<span class="fc" id="L191">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L194">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L195">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L199">            String shorturl = URL + &quot;/&quot; + username + &quot;/food&quot;;</span>
+
+<span class="fc" id="L201">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L203">            HttpData httpData = httpRequest.sendPost(foodDetails.stringify());</span>
+
+<span class="fc bfc" id="L205" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L206">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Sending Food&quot;);</span>
+<span class="fc" id="L207">                return true;</span>
+            } else {
+<span class="fc" id="L209">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - Sending Food&quot;);</span>
+<span class="fc" id="L210">                return false;</span>
+
+            }
+<span class="fc" id="L213">        } catch (IOException e) {</span>
+<span class="fc" id="L214">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Sending Food&quot;);</span>
+<span class="fc" id="L215">            return false;</span>
+        }
+    }
+
+    /**
+     * Requests a FoodDetails ArrayList for a specific user from the server.
+     *
+     * @param username the username whose food to retrieve
+     * @return the ArrayList containing the FoodDetails
+     */
+    public ArrayList&lt;FoodDetails&gt; receiveFood(final String username) {
+
+        try {
+<span class="fc" id="L228">            String shorturl = URL + &quot;/&quot; + username + &quot;/getAllFood&quot;;</span>
+
+<span class="fc" id="L230">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L232">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L234" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L236">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L238">                ArrayList&lt;FoodDetails&gt; foodDetails = FoodDetails.parse(</span>
+<span class="fc" id="L239">                        httpData.getData());</span>
+
+<span class="fc" id="L241">                return foodDetails;</span>
+
+            }
+<span class="fc" id="L244">        } catch (IOException e) {</span>
+<span class="fc" id="L245">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving Food&quot;);</span>
+<span class="fc" id="L246">        }</span>
+
+<span class="fc" id="L248">        return null;</span>
+    }
+
+    /**
+     * Set the progress the user made towards an achievement.
+     * @param achievementId The id of the achievement
+     * @param progress The progress towards the achievement
+     * @return Returns whether or not the update was succesful
+     */
+    public boolean setAchievementProgress(int achievementId, int progress) {
+
+        try {
+<span class="fc" id="L260">            String shorturl = URL + &quot;/&quot; + App.getUsername() + &quot;/&quot; + achievementId + &quot;/&quot;</span>
+                    + progress + &quot;/setProgress&quot;;
+
+<span class="fc" id="L263">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L265">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L267" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L269">                return true;</span>
+
+            }
+<span class="fc" id="L272">        } catch (IOException e) {</span>
+<span class="fc" id="L273">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving &quot;</span>
+                    + &quot;achievement progress&quot;);
+<span class="fc" id="L275">            return false;</span>
+<span class="fc" id="L276">        }</span>
+
+<span class="fc" id="L278">        return false;</span>
+    }
+
+    /**
+     * Retrieve the progress the user made towards an achievement.
+     * @param id Id of the achievement
+     * @return Returns the progress that has been made
+     */
+    public int getAchievementProgress(final int id) {
+
+        try {
+<span class="fc" id="L289">            String shorturl = URL + &quot;/&quot; + App.getUsername() + &quot;/&quot; + id + &quot;/getProgress&quot;;</span>
+
+<span class="fc" id="L291">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L293">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L295" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L297">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L299">                return parseInt(httpData.getData());</span>
+
+            }
+<span class="nc" id="L302">        } catch (IOException e) {</span>
+<span class="nc" id="L303">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server -&quot;</span>
+                    + &quot;Retrieving achievement progress&quot;);
+<span class="fc" id="L305">        }</span>
+
+<span class="fc" id="L307">        return 0;</span>
+    }
+
+    /**
+     * Sends all the badge details to the server.
+     *
+     * @param badgeDetails badge details
+     */
+    public boolean sendBadge(final BadgeDetails badgeDetails) {
+
+<span class="fc" id="L317">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L320">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L321">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L325">            String shorturl = URL + &quot;/&quot; + username + &quot;/food&quot;;</span>
+
+<span class="fc" id="L327">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L329">            HttpData httpData = httpRequest.sendPost(badgeDetails.stringify());</span>
+
+<span class="fc bfc" id="L331" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L332">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Sending Badge&quot;);</span>
+<span class="fc" id="L333">                return true;</span>
+            } else {
+<span class="fc" id="L335">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - Sending Badge&quot;);</span>
+<span class="fc" id="L336">                return false;</span>
+
+            }
+<span class="fc" id="L339">        } catch (IOException e) {</span>
+<span class="fc" id="L340">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Sending Badge&quot;);</span>
+<span class="fc" id="L341">            return false;</span>
+        }
+    }
+
+    /**
+     * Requests all badges from the server.
+     *
+     * @return the ArrayList containing the BadgeDetails
+     */
+    public ArrayList&lt;oop.details.BadgeDetails&gt; receiveBadges() {
+
+        try {
+<span class="fc" id="L353">            String shorturl = URL + &quot;/getAllBadges&quot;;</span>
+
+<span class="fc" id="L355">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L357">            oop.connection.HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L359" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L361">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L363">                return BadgeDetails.parseBadges(httpData.getData());</span>
+            }
+<span class="fc" id="L365">        } catch (IOException e) {</span>
+<span class="fc" id="L366">            App.log(Level.WARNING, CLASS_NAME,</span>
+                    &quot;IOException - GET to Server - Retrieving all badges&quot;);
+<span class="fc" id="L368">        }</span>
+
+<span class="fc" id="L370">        return null;</span>
+    }
+
+    /**
+     * Requests all badges from the server.
+     *
+     * @return the ArrayList containing the BadgeDetails
+     */
+    public ArrayList&lt;Integer&gt; receiveUserBadges() {
+
+        try {
+<span class="fc" id="L381">            String shorturl = URL + &quot;/&quot; + App.getUsername() + &quot;/getAllBadges&quot;;</span>
+
+<span class="fc" id="L383">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L385">            oop.connection.HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L387" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L389">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L391">                return oop.details.BadgeDetails.parseId(httpData.getData());</span>
+            }
+<span class="fc" id="L393">        } catch (IOException e) {</span>
+<span class="fc" id="L394">            App.log(Level.WARNING, CLASS_NAME,</span>
+                    &quot;IOException - GET to Server - Retrieving user badges&quot;);
+<span class="fc" id="L396">        }</span>
+
+<span class="fc" id="L398">        return null;</span>
+    }
+
+    /**
+     * Requests an AchievementsDetails for a specific id from the server.
+     *
+     * @return the ArrayList containing the AchievementDetails
+     */
+    public ArrayList&lt;AchievementDetails&gt; receiveAchievements() {
+
+        try {
+<span class="fc" id="L409">            String shorturl = URL + &quot;/getAllAchievements&quot;;</span>
+
+<span class="fc" id="L411">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L413">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L415" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L417">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L419">                return AchievementDetails.parseAchievements(httpData.getData());</span>
+            }
+<span class="fc" id="L421">        } catch (IOException e) {</span>
+<span class="fc" id="L422">            App.log(Level.WARNING, CLASS_NAME,</span>
+                    &quot;IOException - GET to Server - Retrieving Achievement&quot;);
+<span class="fc" id="L424">        }</span>
+
+<span class="fc" id="L426">        return null;</span>
+    }
+
+    /**
+     * Requests a CarDetails ArrayList for a specific user from the server.
+     *
+     * @param username the username whose cars to retrieve
+     * @return the ArrayList containing the CarDetails
+     */
+    public ArrayList&lt;CarDetails&gt; receiveCars(final String username) {
+
+        try {
+<span class="fc" id="L438">            String shorturl = URL + &quot;/&quot; + username + &quot;/getAllCars&quot;;</span>
+
+<span class="fc" id="L440">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L442">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L444" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L446">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L448">                ArrayList&lt;CarDetails&gt; carDetails = CarDetails.parse(</span>
+<span class="fc" id="L449">                        httpData.getData());</span>
+
+<span class="fc" id="L451">                return carDetails;</span>
+
+            }
+<span class="fc" id="L454">        } catch (IOException e) {</span>
+<span class="fc" id="L455">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving CarList&quot;);</span>
+<span class="fc" id="L456">        }</span>
+
+<span class="fc" id="L458">        return null;</span>
+
+    }
+
+    /**
+     * Deletes registration information.
+     * @param regDetails - RegistrationDetails to delete
+     * @return Return whether or not the user has been succesfully deleted from database
+     */
+    public boolean deleteRegistration(final RegistrationDetails regDetails) {
+        try {
+<span class="fc" id="L469">            String shortUrl = URL + &quot;/deleteRegistration&quot;;</span>
+
+<span class="fc" id="L471">            httpRequest.changeUrl(new URL(shortUrl));</span>
+
+<span class="fc" id="L473">            HttpData httpData = httpRequest.sendPost(regDetails.stringify());</span>
+
+<span class="fc bfc" id="L475" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L476">                App.log(Level.INFO, CLASS_NAME,</span>
+                        &quot;Successful Posting to Server - Deleting Registration&quot;);
+<span class="fc" id="L478">                return true;</span>
+            } else {
+<span class="fc" id="L480">                App.log(Level.INFO, CLASS_NAME,</span>
+                        &quot;Unsuccessful Posting to Server - Deleting Registration&quot;);
+<span class="fc" id="L482">                return false;</span>
+            }
+<span class="fc" id="L484">        } catch (IOException e) {</span>
+<span class="fc" id="L485">            App.log(Level.WARNING, CLASS_NAME,</span>
+                    &quot;IOException - POST to Server - Deleting Registration&quot;);
+<span class="fc" id="L487">            return false;</span>
+        }
+    }
+
+    /**
+     * Deletes a car entry with a certain id.
+     *
+     * @param id The id of the car to be deleted
+     * @return Returns true for succesful delete, false otherwise
+     */
+    public boolean deleteCar(final int id) {
+
+        try {
+<span class="fc" id="L500">            String shorturl = URL + &quot;/&quot; + id + &quot;/deleteCar&quot;;</span>
+
+<span class="fc" id="L502">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+
+<span class="pc bpc" id="L505" title="1 of 2 branches missed.">            if (httpRequest.sendGet().getResponseCode() == RESPONSE_OK) {</span>
+<span class="nc" id="L506">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Deleting Car&quot;);</span>
+<span class="nc" id="L507">                return true;</span>
+
+            } else {
+<span class="fc" id="L510">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - Deleting Car&quot;);</span>
+<span class="fc" id="L511">                return false;</span>
+
+
+            }
+<span class="fc" id="L515">        } catch (IOException e) {</span>
+<span class="fc" id="L516">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Deleting Car&quot;);</span>
+<span class="fc" id="L517">            return false;</span>
+        }
+    }
+
+    /**
+     * Sends all the CarDetails to server.
+     *
+     * @param carDetails CarDetails to be stored
+     * @return Returns true if posting was succesful, false otherwise
+     */
+    public boolean sendCar(final oop.details.CarDetails carDetails) {
+
+<span class="fc" id="L529">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L531" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L532">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L533">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L537">            String shorturl = URL + &quot;/&quot; + username + &quot;/storeCar&quot;;</span>
+
+<span class="fc" id="L539">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L541">            HttpData httpData = httpRequest.sendPost(carDetails.stringify());</span>
+
+<span class="fc bfc" id="L543" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L544">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Sending Car&quot;);</span>
+<span class="fc" id="L545">                return true;</span>
+            } else {
+<span class="fc" id="L547">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - Sending Car&quot;);</span>
+<span class="fc" id="L548">                return false;</span>
+
+            }
+<span class="fc" id="L551">        } catch (IOException e) {</span>
+<span class="fc" id="L552">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Sending Car&quot;);</span>
+<span class="fc" id="L553">            return false;</span>
+        }
+
+    }
+
+    /**
+     * Sends all the TripDetails to server.
+     *
+     * @param tripDetails tripDetails to be stored
+     * @return Returns true if posting was succesful, false otherwise
+     */
+    public boolean sendTrip(final TripDetails tripDetails) {
+
+<span class="fc" id="L566">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L568" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L569">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L570">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L574">            String shorturl = URL + &quot;/&quot; + username + &quot;/storeTrip&quot;;</span>
+
+<span class="fc" id="L576">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L578">            System.out.println(tripDetails.stringify());</span>
+
+<span class="fc" id="L580">            HttpData httpData = httpRequest.sendPost(tripDetails.stringify());</span>
+
+<span class="fc bfc" id="L582" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L583">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Sending Trip&quot;);</span>
+<span class="fc" id="L584">                return true;</span>
+            } else {
+<span class="fc" id="L586">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - Sending Trip&quot;);</span>
+<span class="fc" id="L587">                return false;</span>
+
+            }
+<span class="fc" id="L590">        } catch (IOException e) {</span>
+<span class="fc" id="L591">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Sending Trip&quot;);</span>
+<span class="fc" id="L592">            return false;</span>
+        }
+
+    }
+
+    /**
+     * Requests a TripDetails ArrayList for a specific user from the server.
+     *
+     * @param username the username whose trips to retrieve
+     * @return the ArrayList containing the TripDetails
+     */
+    public ArrayList&lt;oop.details.TripDetails&gt; receiveTrips(final String username) {
+
+        try {
+<span class="fc" id="L606">            String shorturl = URL + &quot;/&quot; + username + &quot;/getAllTrips&quot;;</span>
+
+<span class="fc" id="L608">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L610">            oop.connection.HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L612" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+                //System.out.println(httpData.getData());
+
+<span class="fc" id="L616">                ArrayList&lt;oop.details.TripDetails&gt; tripDetails = oop.details.TripDetails.parse(</span>
+<span class="fc" id="L617">                        httpData.getData());</span>
+
+<span class="fc" id="L619">                return tripDetails;</span>
+
+            }
+<span class="fc" id="L622">        } catch (IOException e) {</span>
+<span class="fc" id="L623">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving TripList&quot;);</span>
+<span class="fc" id="L624">        }</span>
+
+<span class="fc" id="L626">        return null;</span>
+
+    }
+
+    /**
+     * Requests a SettingsDetails ArrayList for a specific user from the server.
+     *
+     * @param username the username whose settings to retrieve
+     * @return the ArrayList containing the SettingsDetails
+     */
+    public SettingsDetails receiveSettings(final String username) {
+
+        try {
+<span class="fc" id="L639">            String shorturl = URL + &quot;/&quot; + username + &quot;/getSettings&quot;;</span>
+
+<span class="fc" id="L641">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L643">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L645" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L647">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L649">                SettingsDetails settingsDetails = SettingsDetails.parse(</span>
+<span class="fc" id="L650">                        httpData.getData());</span>
+
+<span class="fc" id="L652">                return settingsDetails;</span>
+
+            }
+<span class="fc" id="L655">        } catch (IOException e) {</span>
+<span class="fc" id="L656">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving Settings&quot;);</span>
+<span class="fc" id="L657">        }</span>
+
+<span class="fc" id="L659">        return null;</span>
+
+    }
+
+    /**
+     * Sends all the SettingsDetails to server.
+     *
+     * @param settingsDetails SettingsDetails to be stored
+     * @return Returns true if posting was succesful, false otherwise
+     */
+    public boolean sendSettings(final SettingsDetails settingsDetails) {
+
+<span class="fc" id="L671">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L673" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L674">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L675">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L679">            String shorturl = URL + &quot;/&quot; + username + &quot;/storeSettings&quot;;</span>
+
+<span class="fc" id="L681">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L683">            HttpData httpData = httpRequest.sendPost(settingsDetails.stringify());</span>
+
+<span class="fc bfc" id="L685" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L686">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Sending Settings&quot;);</span>
+<span class="fc" id="L687">                return true;</span>
+            } else {
+<span class="fc" id="L689">                App.log(Level.INFO, CLASS_NAME,</span>
+                        &quot;Unsuccessful Posting to Server - Sending Settings&quot;);
+<span class="fc" id="L691">                return false;</span>
+
+            }
+<span class="fc" id="L694">        } catch (IOException e) {</span>
+<span class="fc" id="L695">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Sending Settings&quot;);</span>
+<span class="fc" id="L696">            return false;</span>
+        }
+
+    }
+
+    /**
+     * Sends an id to the server to remove the food details entry.
+     *
+     * @param id Id of the food details
+     */
+    public boolean removeFood(final int id) {
+
+<span class="fc bfc" id="L708" title="All 2 branches covered.">        if (id &lt;= 0) {</span>
+<span class="fc" id="L709">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L713">            String shorturl = URL + &quot;/&quot; + id + &quot;/deleteFood&quot;;</span>
+
+<span class="fc" id="L715">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+
+<span class="pc bpc" id="L718" title="1 of 2 branches missed.">            if (httpRequest.sendGet().getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L719">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - &quot;</span>
+                        + &quot;Deleting food details&quot;);
+<span class="fc" id="L721">                return true;</span>
+            } else {
+<span class="nc" id="L723">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - &quot;</span>
+                        + &quot;Deleting food details&quot;);
+<span class="nc" id="L725">                return false;</span>
+
+            }
+<span class="fc" id="L728">        } catch (IOException e) {</span>
+<span class="fc" id="L729">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - &quot;</span>
+                    + &quot;Deleting food details&quot;);
+<span class="fc" id="L731">            return false;</span>
+        }
+    }
+
+    /**
+     * Requests a RegistrationDetails for a specific user from the server.
+     *
+     * @param username the username whose details to retrieve
+     * @return the RegistrationDetails containing the data
+     */
+    public RegistrationDetails receiveDetails(final String username) {
+
+        try {
+<span class="fc" id="L744">            String shorturl = URL + &quot;/&quot; + username + &quot;/getRegistrationInfo&quot;;</span>
+
+<span class="fc" id="L746">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L748">            oop.connection.HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L750" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L752">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L754">                return oop.details.RegistrationDetails.parse(httpData.getData());</span>
+
+            }
+<span class="fc" id="L757">        } catch (IOException e) {</span>
+<span class="fc" id="L758">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving Food&quot;);</span>
+<span class="fc" id="L759">        }</span>
+
+<span class="fc" id="L761">        return null;</span>
+    }
+
+    /**
+     * Requests usernames from the server according to a few chars.
+     *
+     * @param start the username whose details to retrieve
+     * @return the RegistrationDetails containing the data
+     */
+    public ArrayList&lt;String&gt; receiveUsers(final String start) {
+
+        try {
+<span class="fc" id="L773">            String shorturl = URL + &quot;/&quot; + start + &quot;/getUsernames&quot;;</span>
+
+<span class="fc" id="L775">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L777">            oop.connection.HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="pc bpc" id="L779" title="1 of 2 branches missed.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="nc" id="L781">                System.out.println(httpData.getData());</span>
+
+<span class="nc" id="L783">                return RegistrationDetails.parseUsers(httpData.getData());</span>
+
+            }
+<span class="fc" id="L786">        } catch (IOException e) {</span>
+<span class="fc" id="L787">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving Food&quot;);</span>
+<span class="fc" id="L788">        }</span>
+
+<span class="fc" id="L790">        return null;</span>
+    }
+
+    /**
+     * Requests a score for a specific user from the server.
+     *
+     * @param username the username whose score to retrieve
+     * @return the score of the user
+     */
+    public int receiveScore(final String username) {
+
+        try {
+<span class="fc" id="L802">            String shorturl = URL + &quot;/&quot; + username + &quot;/getScore&quot;;</span>
+
+<span class="fc" id="L804">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L806">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L808" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L810">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L812">                return RegistrationDetails.parseScore(httpData.getData());</span>
+
+            }
+<span class="fc" id="L815">        } catch (IOException e) {</span>
+<span class="fc" id="L816">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving Food&quot;);</span>
+<span class="fc" id="L817">        }</span>
+
+<span class="fc" id="L819">        return -1;</span>
+    }
+
+    /**
+     * Requests a friends' leaderboard from the server.
+     *
+     * @param username the username whose friend leaderboard to retrieve
+     * @return Leaderboard of the user, sorted
+     */
+    public ArrayList&lt;LeaderboardDetails&gt; receiveFriendLeaderboard(final String username) {
+
+        try {
+<span class="fc" id="L831">            String shorturl = URL + &quot;/&quot; + username + &quot;/getFriendsLeaderboard&quot;;</span>
+
+<span class="fc" id="L833">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L835">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="fc bfc" id="L837" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="fc" id="L839">                System.out.println(httpData.getData());</span>
+
+<span class="fc" id="L841">                return LeaderboardDetails.parse(httpData.getData());</span>
+
+            }
+<span class="nc" id="L844">        } catch (IOException e) {</span>
+<span class="nc" id="L845">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving Food&quot;);</span>
+<span class="fc" id="L846">        }</span>
+
+<span class="fc" id="L848">        return null;</span>
+    }
+
+    /**
+     * Requests a list of friends for a specific user from the server.
+     *
+     * @param username the username whose friends to retrieve
+     * @return the friends of the user
+     */
+    public FriendDetails receiveFriends(final String username) {
+
+        try {
+<span class="fc" id="L860">            String shorturl = URL + &quot;/&quot; + username + &quot;/getAllFriends&quot;;</span>
+
+<span class="fc" id="L862">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L864">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="pc bpc" id="L866" title="1 of 2 branches missed.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+
+<span class="nc" id="L868">                System.out.println(httpData.getData());</span>
+
+<span class="nc" id="L870">                return new FriendDetails(username, FriendDetails.parse(httpData.getData()));</span>
+
+            }
+<span class="nc" id="L873">        } catch (IOException e) {</span>
+<span class="nc" id="L874">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - GET to Server - Retrieving friends&quot;);</span>
+<span class="fc" id="L875">        }</span>
+
+<span class="fc" id="L877">        return null;</span>
+    }
+
+    /**
+     * Sends a friend to the server to add.
+     *
+     * @param friend friend to add
+     */
+    public boolean addFriend(final String friend) {
+
+<span class="fc" id="L887">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L889" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L890">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L891">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L895">            String shorturl = URL + &quot;/&quot; + username + &quot;/storeFriend&quot;;</span>
+
+<span class="fc" id="L897">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L899">            HttpData httpData = httpRequest.sendPost(&quot;{\&quot;friend\&quot;:\&quot;&quot; + friend + &quot;\&quot;}&quot;);</span>
+
+<span class="pc bpc" id="L901" title="1 of 2 branches missed.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="nc" id="L902">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Adding friend&quot;);</span>
+<span class="nc" id="L903">                return true;</span>
+            } else {
+<span class="fc" id="L905">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - Adding friend&quot;);</span>
+<span class="fc" id="L906">                return false;</span>
+
+            }
+<span class="fc" id="L909">        } catch (IOException e) {</span>
+<span class="fc" id="L910">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Adding friend&quot;);</span>
+<span class="fc" id="L911">            return false;</span>
+        }
+    }
+
+    /**
+     * Sends a friend to the server to remove.
+     *
+     * @param friend friend to add
+     */
+    public boolean removeFriend(final String friend) {
+
+<span class="fc" id="L922">        String username = App.getUsername();</span>
+
+<span class="fc bfc" id="L924" title="All 2 branches covered.">        if (username.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L925">            App.log(Level.WARNING, CLASS_NAME, &quot;User Not logged In&quot;);</span>
+<span class="fc" id="L926">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L930">            String shorturl = URL + &quot;/&quot; + username + &quot;/deleteFriend&quot;;</span>
+
+<span class="fc" id="L932">            httpRequest.changeUrl(new URL(shorturl));</span>
+
+<span class="fc" id="L934">            HttpData httpData = httpRequest.sendPost(&quot;{\&quot;friend\&quot;:\&quot;&quot; + friend + &quot;\&quot;}&quot;);</span>
+
+<span class="fc bfc" id="L936" title="All 2 branches covered.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L937">                App.log(Level.INFO, CLASS_NAME, &quot;Successful Posting to Server - Deleting friend&quot;);</span>
+<span class="fc" id="L938">                return true;</span>
+            } else {
+<span class="fc" id="L940">                App.log(Level.INFO, CLASS_NAME, &quot;Unsuccessful Posting to Server - Deleting friend&quot;);</span>
+<span class="fc" id="L941">                return false;</span>
+
+            }
+<span class="fc" id="L944">        } catch (IOException e) {</span>
+<span class="fc" id="L945">            App.log(Level.WARNING, CLASS_NAME, &quot;IOException - POST to Server - Deleting friend&quot;);</span>
+<span class="fc" id="L946">            return false;</span>
+        }
+    }
+
+    public static String getUrl() {
+<span class="fc" id="L951">        return URL;</span>
+    }
+
+    public static void setUrl(String url) {
+<span class="fc" id="L955">        Connection.URL = url;</span>
+<span class="fc" id="L956">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

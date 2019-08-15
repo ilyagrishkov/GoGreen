@@ -1,0 +1,32 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+* {
+    -fx-font-family: "Marker";
+
+}
+
+#lblname,
+#lbltype,
+#lblconsumption,
+#name,
+#carChoice,
+#consumption {
+
+    -fx-font-size: 15;
+}
+
+
+
+#doneBtn,
+#close {
+
+    -fx-font-size: 20;
+}
+
+#details {
+
+    -fx-font-size: 30;
+    -fx-text-fill: #61b73a;
+}

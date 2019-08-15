@@ -1,0 +1,58 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+#mainPane {
+    -fx-background-image: url(../images/mainBackground.jpg);
+    -fx-background-size: cover;
+}
+
+#profileBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/profile_white_50.png');
+}
+
+#profileBtn:hover {
+    -fx-background-image: url('../images/profile_green_50.png');
+}
+
+#homeBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/home_white_50.png');
+}
+
+#homeBtn:hover {
+    -fx-background-image: url('../images/home_green_50.png');
+}
+
+#lblBadges {
+
+    -fx-font-family: "Marker";
+    -fx-font-size: 40;
+    -fx-text-fill: #61b73a;
+}
+
+#scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+#scroll {
+    -fx-background-color: transparent;
+}
+
+#scroll .thumb {
+    -fx-background-color: #61b73a;
+    -fx-background-radius: 5em;
+}
+
+#scroll .increment-button,
+#scroll .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#scroll .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 10;
+}

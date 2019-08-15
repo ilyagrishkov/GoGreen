@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.LoginDetailsTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:15:00" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.007">
+  <properties/>
+  <testcase name="getPasswordTrue" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="getUsernameTrue" classname="oop.LoginDetailsTest" time="0.001"/>
+  <testcase name="setPasswordTest" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="equalsTestTrue" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="setUsernameTest" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="getPasswordFalse" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="test_stringify" classname="oop.LoginDetailsTest" time="0.001"/>
+  <testcase name="getUsernameFalse" classname="oop.LoginDetailsTest" time="0.001"/>
+  <testcase name="constructorTestNull" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="constructorTestNotNull" classname="oop.LoginDetailsTest" time="0.001"/>
+  <testcase name="equalsTestFalse_wrong_object" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="equalsTestFalse_pass" classname="oop.LoginDetailsTest" time="0.0"/>
+  <testcase name="equalsTestFalse_user" classname="oop.LoginDetailsTest" time="0.0"/>
+  <system-out><![CDATA[{"password":"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08","username":"test"}
+]]></system-out>
+  <system-err><![CDATA[Apr 14, 2019 8:15:01 PM oop.App log
+INFO: oop.details.LoginDetails: Creating JSON - Login
+]]></system-err>
+</testsuite>

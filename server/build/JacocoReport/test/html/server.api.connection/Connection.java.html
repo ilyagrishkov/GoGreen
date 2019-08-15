@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Connection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server.api.connection</a> &gt; <span class="el_source">Connection.java</span></div><h1>Connection.java</h1><pre class="source lang-java linenums">package server.api.connection;
+
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+@Service
+<span class="fc" id="L19">public class Connection {</span>
+    /**
+     * HTTPRequest OK code.
+     */
+    private static final int RESPONSE_OK = 200;
+    /**
+     * List from ksimms2 on github.
+     * link: https://github.com/ksimms2/GreenPrint/blob/master/app/src/main/java/edu/cnm/deepdive/green_print/controller/CC_API.java.
+     */
+<span class="fc" id="L28">    private static String[] requiredKeys = {</span>
+        &quot;input_size=&quot;,
+        &quot;input_footprint_household_adults=&quot;,
+        &quot;input_footprint_housing_squarefeet=&quot;,
+        &quot;input_footprint_housing_electricity_dollars=&quot;,
+        &quot;input_footprint_housing_naturalgas_dollars=&quot;,
+        &quot;input_footprint_shopping_food_meatfisheggs=&quot;, //Calories eaten daily of meat, fish and eggs
+        &quot;input_footprint_shopping_food_dairy=&quot;,                      //Calories eaten daily of dairy
+        &quot;input_footprint_shopping_food_otherfood=&quot;,                    //Calories per day other food
+        &quot;input_footprint_shopping_food_fruitvegetables=&quot;,     //Calories per day fruits and veggies
+        &quot;input_footprint_shopping_food_cereals=&quot;,
+        &quot;input_footprint_housing_watersewage=&quot;,
+        &quot;input_footprint_housing_cleanpercent=&quot;,                       //Assume no clean energy
+        &quot;input_takeaction_assumption_kwhprice=&quot;,//12
+        &quot;input_takeaction_assumption_price_of_gasoline=&quot;,//13
+        &quot;input_takeaction_assumption_ngprice=&quot;,//14
+
+        &quot;input_footprint_transportation_num_vehicles=0&quot;,
+        &quot;input_footprint_transportation_fuel1=0&quot;,
+        &quot;input_footprint_transportation_mpg1=0&quot;,
+        &quot;input_footprint_transportation_miles1=0&quot;,
+
+        &quot;internal_state_abbreviation=AK&quot;,
+        &quot;input_takeaction_switch_to_cfl=0&quot;,
+        &quot;input_takeaction_maintain_my_vehicles=0&quot;,
+        &quot;input_takeaction_more_efficient_vehicle=0&quot;,
+        &quot;input_takeaction_reduce_air_travel=0&quot;,
+        &quot;input_takeaction_telecommute_to_work=0&quot;,
+        &quot;input_takeaction_thermostat_summer=0&quot;,
+        &quot;input_takeaction_offset_housing=0&quot;,
+        &quot;input_takeaction_energy_star_fridge=0&quot;,
+        &quot;input_takeaction_thermostat_winter=0&quot;,
+        &quot;input_takeaction_offset_transportation=0&quot;,
+        &quot;input_takeaction_ride_my_bike=0&quot;,
+        &quot;input_takeaction_purchase_green_electricity=0&quot;,
+        &quot;input_takeaction_take_public_transportation=0&quot;,
+        &quot;input_takeaction_carpool_to_work=0&quot;,
+        &quot;input_takeaction_practice_eco_driving=0&quot;,
+        &quot;input_footprint_household_children=0&quot;,         // How many children occupy the user's house
+        &quot;input_footprint_housing_heatingoil_dollars=0&quot;,
+        &quot;input_footprint_housing_hdd=0&quot;,                // Days that the house is heated/year
+        &quot;input_footprint_housing_cdd=0&quot;,               // Days that the house is cooled/year
+        &quot;input_footprint_transportation_airtotal=0&quot;,  //assume no air trips
+        &quot;input_footprint_transportation_publictrans=0&quot;, //same here
+        &quot;input_changed=0&quot;,                                              // Meaningless variable
+        &quot;input_footprint_transportation_num_vehicles=0&quot;,  // Number of vehicles is assumed to be 3
+        &quot;input_footprint_transportation_fuel2=1&quot;,
+        &quot;input_footprint_transportation_fuel3=1&quot;,
+        &quot;input_footprint_transportation_miles2=0&quot;,
+        &quot;input_footprint_transportation_miles3=0&quot;,
+        &quot;input_footprint_transportation_miles4=0&quot;,
+        &quot;input_footprint_transportation_mpg2=0&quot;,
+        &quot;input_footprint_transportation_mpg3=0&quot;,
+        &quot;input_footprint_transportation_mpg4=0&quot;,
+        &quot;input_footprint_transportation_fuel4=1&quot;,
+        &quot;input_footprint_transportation_miles5=0&quot;,
+        &quot;input_footprint_transportation_mpg5=0&quot;,
+        &quot;input_footprint_transportation_fuel5=1&quot;,
+        &quot;input_footprint_transportation_miles6=0&quot;,
+        &quot;input_footprint_transportation_mpg6=0&quot;,
+        &quot;input_footprint_transportation_fuel6=1&quot;,
+        &quot;input_footprint_transportation_miles7=0&quot;,
+        &quot;input_footprint_transportation_mpg7=0&quot;,
+        &quot;input_footprint_transportation_fuel7=1&quot;,
+        &quot;input_footprint_transportation_miles8=0&quot;,
+        &quot;input_footprint_transportation_mpg8=0&quot;,
+        &quot;input_footprint_transportation_fuel8=1&quot;,
+        &quot;input_footprint_transportation_miles9=0&quot;,
+        &quot;input_footprint_transportation_mpg9=0&quot;,
+        &quot;input_footprint_transportation_fuel9=1&quot;,
+        &quot;input_footprint_transportation_miles10=0&quot;,
+        &quot;input_footprint_transportation_mpg10=0&quot;,
+        &quot;input_footprint_transportation_fuel10=1&quot;,
+        &quot;input_footprint_transportation_airtype=simple&quot;, // Total miles covered for air
+        &quot;input_footprint_transportation_groundtype=simple&quot;, // Total miles for public transportation
+        &quot;input_footprint_housing_electricity_type=0&quot;,                   // In $/year
+        &quot;input_footprint_housing_naturalgas_type=0&quot;,                    // In $/year
+        &quot;input_footprint_housing_heatingoil_type=0&quot;,                    // In $/year
+        &quot;input_footprint_housing_heatingoil_dollars_per_gallon=4&quot;, //Average is $4/gallon
+        &quot;input_footprint_shopping_food_meattype=simple&quot;,           // Meat consumed by the user
+        &quot;input_footprint_shopping_goods_default_furnitureappliances=0&quot;,
+        &quot;input_footprint_shopping_goods_default_clothing=0&quot;,            // Clothing cost/year
+        &quot;input_footprint_shopping_goods_default_other_entertainment=0&quot;, // Entertainment cost/year
+        &quot;input_footprint_shopping_goods_default_other_office=0&quot;,        // Office supplies cost/year
+        &quot;input_footprint_shopping_goods_default_other_personalcare=0&quot;,  // Personal care cost/year
+        &quot;input_footprint_shopping_goods_default_other_autoparts=0&quot;,     // Auto cost/year
+        &quot;input_footprint_shopping_goods_default_other_medical=0&quot;,
+        &quot;input_footprint_shopping_goods_type=advanced&quot;,
+        &quot;input_footprint_shopping_goods_total=0&quot;, // No input by the user, sum of the subtotals
+        &quot;input_footprint_shopping_services_type=simple&quot;,
+        &quot;input_footprint_shopping_services_total=0&quot;,
+        &quot;input_footprint_housing_gco2_per_kwh=1000&quot;
+    };
+    /**
+     * Corresponds to the different types of results to get.
+     */
+<span class="fc" id="L124">    private static String[] different_types = {</span>
+        &quot;result_motor_vehicles_direct&quot;,
+        &quot;result_motor_vehicles_indirect&quot;,
+        &quot;result_vehicle_manufact&quot;,
+        &quot;result_air_travel_direct&quot;,
+        &quot;result_air_travel_indirect&quot;,
+        &quot;result_electricity_direct&quot;,
+        &quot;result_electricity_indirect&quot;,
+        &quot;result_publictrans_direct&quot;,
+        &quot;result_publictrans_indirect&quot;,
+        &quot;result_natgas_direct&quot;,
+        &quot;result_natgas_indirect&quot;,
+        &quot;result_heatingoil_direct&quot;,
+        &quot;result_heatingoil_indirect&quot;,
+        &quot;result_watersewage&quot;,
+        &quot;result_shelter&quot;,
+        &quot;result_food_meat&quot;,
+        &quot;result_food_dairy&quot;,
+        &quot;result_food_other&quot;,
+        &quot;result_food_fruitsveg&quot;,
+        &quot;result_food_cereals&quot;,
+        &quot;result_goods_clothing&quot;,
+        &quot;result_goods_furniture&quot;,
+        &quot;result_goods_other&quot;,
+        &quot;result_services_all&quot;,
+        &quot;result_transport_total&quot;,
+        &quot;result_housing_total&quot;,
+        &quot;result_food_total&quot;,
+        &quot;result_goods_total&quot;,
+        &quot;result_services_total&quot;,
+        &quot;result_grand_total&quot;
+    };
+    /**
+     * Base API URL.
+     */
+<span class="fc" id="L159">    private static String BASE_URL = &quot;https://apis.berkeley.edu/coolclimate/footprint?input_location_mode=1&amp;input_location=99500&amp;input_income=1&quot;;</span>
+
+    private class Utilities {
+
+        int squarefeet;
+        int elecBill;
+        int gasBill;
+        int watersewage;
+        int cleanpercent;
+        double priceGasoline;
+        double priceNatGas;
+
+        public Utilities(int squarefeet, int elecBill, int gasBill, int watersewage,
+<span class="nc" id="L172">                         int cleanpercent, double priceGasoline, double priceNatGas) {</span>
+<span class="nc" id="L173">            this.squarefeet = squarefeet;</span>
+<span class="nc" id="L174">            this.elecBill = elecBill;</span>
+<span class="nc" id="L175">            this.gasBill = gasBill;</span>
+<span class="nc" id="L176">            this.watersewage = watersewage;</span>
+<span class="nc" id="L177">            this.cleanpercent = cleanpercent;</span>
+<span class="nc" id="L178">            this.priceGasoline = priceGasoline;</span>
+<span class="nc" id="L179">            this.priceNatGas = priceNatGas;</span>
+<span class="nc" id="L180">        }</span>
+    }
+
+    private class Food {
+
+        int meatfisheggs;
+        int dairy;
+        int otherfood;
+        int veggies;
+        int cereals;
+
+<span class="nc" id="L191">        public Food(int meatfisheggs, int dairy, int otherfood, int veggies, int cereals) {</span>
+<span class="nc" id="L192">            this.meatfisheggs = meatfisheggs;</span>
+<span class="nc" id="L193">            this.dairy = dairy;</span>
+<span class="nc" id="L194">            this.otherfood = otherfood;</span>
+<span class="nc" id="L195">            this.veggies = veggies;</span>
+<span class="nc" id="L196">            this.cereals = cereals;</span>
+<span class="nc" id="L197">        }</span>
+    }
+
+    /**
+     * Returns kg of CO2e per day depending on input.
+     *
+     * @param type         type of result to get
+     * @param inputSize    number of people in household
+     * @param utilities    utilities data
+     * @param food         food data
+     * @return Returns kg of CO2e per day
+     */
+    public int getTotal(String type, int inputSize, int centsperkwh, UtilitiesData utilities,
+                        FoodData food) {
+
+<span class="fc" id="L212">        int count = 0;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        for (String indivType : different_types) {</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">            if (type.equals(indivType)) {</span>
+<span class="fc" id="L215">                count++;</span>
+            }
+        }
+
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">        if (count == 0) {</span>
+<span class="nc" id="L220">            System.out.println(&quot;Wrong Result type&quot;);</span>
+<span class="nc" id="L221">            return -5;</span>
+        }
+
+<span class="fc" id="L224">        requiredKeys[0] += inputSize;</span>
+<span class="fc" id="L225">        requiredKeys[1] += inputSize;</span>
+<span class="fc" id="L226">        requiredKeys[2] += utilities.squarefeet;</span>
+<span class="fc" id="L227">        requiredKeys[3] += utilities.elecBill * 12; //yearly average</span>
+<span class="fc" id="L228">        requiredKeys[4] += utilities.gasBill * 12; //same</span>
+<span class="fc" id="L229">        requiredKeys[5] += food.meatfisheggs;</span>
+<span class="fc" id="L230">        requiredKeys[6] += food.dairy;</span>
+<span class="fc" id="L231">        requiredKeys[7] += food.otherfood;</span>
+<span class="fc" id="L232">        requiredKeys[8] += food.veggies;</span>
+<span class="fc" id="L233">        requiredKeys[9] += food.cereals;</span>
+<span class="fc" id="L234">        requiredKeys[10] += utilities.watersewage * 12;</span>
+<span class="fc" id="L235">        requiredKeys[11] += utilities.cleanpercent;</span>
+<span class="fc" id="L236">        requiredKeys[12] += centsperkwh;</span>
+<span class="fc" id="L237">        requiredKeys[13] += utilities.priceGasoline;</span>
+<span class="fc" id="L238">        requiredKeys[14] += utilities.priceNatGas;</span>
+
+<span class="fc" id="L240">        StringBuilder finalurl = new StringBuilder(BASE_URL);</span>
+
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        for (String parameter : requiredKeys) {</span>
+<span class="fc" id="L243">            finalurl.append(&quot;&amp;&quot; + parameter);</span>
+        }
+
+
+        try {
+<span class="fc" id="L248">            HttpRequest httpRequest = new HttpRequest(finalurl.toString());</span>
+
+<span class="fc" id="L250">            HttpData httpData = httpRequest.sendGet();</span>
+
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">            if (httpData.getResponseCode() == RESPONSE_OK) {</span>
+<span class="fc" id="L253">                System.out.println(httpData.getData());</span>
+
+                try {
+<span class="fc" id="L256">                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L257">                    DocumentBuilder docBuilder = dbFactory.newDocumentBuilder();</span>
+
+                    //converting string into xml document
+<span class="fc" id="L260">                    Document doc = docBuilder.parse(</span>
+<span class="fc" id="L261">                            new InputSource(new StringReader(httpData.getData())));</span>
+
+<span class="fc" id="L263">                    doc.getDocumentElement().normalize();</span>
+
+<span class="fc" id="L265">                    NodeList nodelist = doc.getElementsByTagName(&quot;response&quot;);</span>
+
+<span class="fc" id="L267">                    double tempResult = getResult(nodelist, type);</span>
+
+<span class="fc" id="L269">                    requiredKeys[0] = &quot;input_size=&quot;;</span>
+<span class="fc" id="L270">                    requiredKeys[1] = &quot;input_footprint_household_adults=&quot;;</span>
+<span class="fc" id="L271">                    requiredKeys[2] = &quot;input_footprint_housing_squarefeet=&quot;;</span>
+<span class="fc" id="L272">                    requiredKeys[3] = &quot;input_footprint_housing_electricity_dollars=&quot;;</span>
+<span class="fc" id="L273">                    requiredKeys[4] = &quot;input_footprint_housing_naturalgas_dollars=&quot;;</span>
+<span class="fc" id="L274">                    requiredKeys[5] = &quot;input_footprint_shopping_food_meatfisheggs=&quot;;</span>
+<span class="fc" id="L275">                    requiredKeys[6] = &quot;input_footprint_shopping_food_dairy=&quot;;</span>
+<span class="fc" id="L276">                    requiredKeys[7] = &quot;input_footprint_shopping_food_otherfood=&quot;;</span>
+<span class="fc" id="L277">                    requiredKeys[8] = &quot;input_footprint_shopping_food_fruitvegetables=&quot;;</span>
+<span class="fc" id="L278">                    requiredKeys[9] = &quot;input_footprint_shopping_food_cereals=&quot;;</span>
+<span class="fc" id="L279">                    requiredKeys[10] = &quot;input_footprint_housing_watersewage=&quot;;</span>
+<span class="fc" id="L280">                    requiredKeys[11] = &quot;input_footprint_housing_cleanpercent=&quot;;</span>
+<span class="fc" id="L281">                    requiredKeys[12] = &quot;input_takeaction_assumption_kwhprice=&quot;;//12</span>
+<span class="fc" id="L282">                    requiredKeys[13] = &quot;input_takeaction_assumption_price_of_gasoline=&quot;;//13</span>
+<span class="fc" id="L283">                    requiredKeys[14] = &quot;input_takeaction_assumption_ngprice=&quot;;//14</span>
+
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">                    if (type.equals(&quot;result_food_total&quot;)) {</span>
+                        //dividing by 3 for 1 meal
+<span class="fc" id="L287">                        return (int) tempResult / 3;</span>
+                    } else {
+                        //returns kg per day
+<span class="nc" id="L290">                        return (int) tempResult;</span>
+                    }
+<span class="nc" id="L292">                } catch (SAXException e) {</span>
+<span class="nc" id="L293">                    e.printStackTrace();</span>
+<span class="nc" id="L294">                } catch (ParserConfigurationException e) {</span>
+<span class="nc" id="L295">                    e.printStackTrace();</span>
+<span class="nc" id="L296">                }</span>
+            }
+<span class="nc" id="L298">        } catch (IOException e) {</span>
+<span class="nc" id="L299">            System.out.println(&quot;IOException when sending to API&quot;);</span>
+<span class="nc" id="L300">        }</span>
+
+<span class="nc" id="L302">        requiredKeys[0] = &quot;input_size=&quot;;</span>
+<span class="nc" id="L303">        requiredKeys[1] = &quot;input_footprint_household_adults=&quot;;</span>
+<span class="nc" id="L304">        requiredKeys[2] = &quot;input_footprint_housing_squarefeet=&quot;;</span>
+<span class="nc" id="L305">        requiredKeys[3] = &quot;input_footprint_housing_electricity_dollars=&quot;;</span>
+<span class="nc" id="L306">        requiredKeys[4] = &quot;input_footprint_housing_naturalgas_dollars=&quot;;</span>
+<span class="nc" id="L307">        requiredKeys[5] = &quot;input_footprint_shopping_food_meatfisheggs=&quot;;</span>
+<span class="nc" id="L308">        requiredKeys[6] = &quot;input_footprint_shopping_food_dairy=&quot;;</span>
+<span class="nc" id="L309">        requiredKeys[7] = &quot;input_footprint_shopping_food_otherfood=&quot;;</span>
+<span class="nc" id="L310">        requiredKeys[8] = &quot;input_footprint_shopping_food_fruitvegetables=&quot;;</span>
+<span class="nc" id="L311">        requiredKeys[9] = &quot;input_footprint_shopping_food_cereals=&quot;;</span>
+<span class="nc" id="L312">        requiredKeys[10] = &quot;input_footprint_housing_watersewage=&quot;;</span>
+<span class="nc" id="L313">        requiredKeys[11] = &quot;input_footprint_housing_cleanpercent=&quot;;</span>
+<span class="nc" id="L314">        requiredKeys[12] = &quot;input_takeaction_assumption_kwhprice=&quot;;//12</span>
+<span class="nc" id="L315">        requiredKeys[13] = &quot;input_takeaction_assumption_price_of_gasoline=&quot;;//13</span>
+<span class="nc" id="L316">        requiredKeys[14] = &quot;input_takeaction_assumption_ngprice=&quot;;//14</span>
+
+<span class="nc" id="L318">        return -5;</span>
+    }
+
+    private static double getResult(NodeList nodelist, String type) {
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">        for (int temp = 0; temp &lt; nodelist.getLength(); temp++) {</span>
+
+<span class="fc" id="L324">            Node node = nodelist.item(temp);</span>
+
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">            if (node.getNodeType() == Node.ELEMENT_NODE) {</span>
+
+<span class="fc" id="L328">                Element element = (Element) node;</span>
+
+<span class="fc" id="L330">                String result = element.getElementsByTagName(type)</span>
+<span class="fc" id="L331">                        .item(0).getTextContent();</span>
+
+<span class="fc" id="L333">                return ((Double.parseDouble(result)) / 365) * 1000 * 100;</span>
+            }
+        }
+
+<span class="nc" id="L337">        return -5.0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

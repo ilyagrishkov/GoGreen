@@ -1,0 +1,123 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+* {
+    -fx-font-family: "Marker";
+}
+
+#registerButton,
+#txtLogin,
+#txtPass {
+    -fx-font-size: 20;
+}
+
+#loginButton {
+    -fx-font-size: 40;
+}
+
+#txtLogin {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #61b73a;
+    -fx-border-width: 2;
+}
+
+#txtPass {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #61b73a;
+    -fx-border-width: 2;
+}
+
+#registerButton {
+    -fx-background-color: null;
+    -fx-border-color: #61b73a;
+    -fx-border-width: 2;
+    -fx-border-radius: 20;
+    -fx-line-spacing: 100;
+    -fx-padding: 0;
+}
+
+#registerButton:hover {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#registerButton:pressed {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-scale-y: 0.99;
+    -fx-scale-x: 0.99;
+}
+
+#registerButton:focused {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#registerButton:hover:focused {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#loginButton {
+    -fx-background-color: null;
+    -fx-border-color: #61b73a;
+    -fx-border-width: 3;
+    -fx-padding: 0;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-min-width: 100;
+    -fx-min-height: 100;
+    -fx-max-height: 100;
+    -fx-max-width: 100;
+}
+
+#loginButton:hover {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#loginButton:pressed {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+    -fx-scale-y: 0.99;
+    -fx-scale-x: 0.99;
+}
+
+#loginButton:focused {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#loginButton:hover:focused {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#closeBtn {
+    -fx-background-image: url("../images/closeButton.png");
+    -fx-backgound-color: white;
+}
+
+#closeBtn:hover {
+    -fx-background-image: url("../images/closeButton_pressed.png");
+}
+
+#closeBtn:pressed {
+    -fx-background-image: url("../images/closeButton.png");
+}
+
+#minimizeBtn {
+    -fx-background-image: url("../images/restoreButton.png");
+    -fx-backgound-color: white;
+}
+
+#minimizeBtn:hover {
+    -fx-background-image: url("../images/restoreButton_pressed.png");
+}
+
+#minimizeBtn:pressed {
+    -fx-background-image: url("../images/restoreButton.png");
+}

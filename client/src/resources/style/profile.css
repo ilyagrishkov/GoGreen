@@ -1,0 +1,124 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+* {
+    -fx-font-family: "Marker";
+}
+
+#mainPane {
+    -fx-background-image: url(../images/mainBackground.jpg);
+    -fx-background-size: cover;
+}
+
+#profileBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/profile_white_50.png');
+}
+
+#profileBtn:hover {
+    -fx-background-image: url('../images/profile_green_50.png');
+}
+
+#homeBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/home_white_50.png');
+}
+
+#homeBtn:hover {
+    -fx-background-image: url('../images/home_green_50.png');
+}
+
+#lblProfile {
+
+    -fx-font-family: "Marker";
+    -fx-font-size: 40;
+    -fx-text-fill: #61b73a;
+}
+
+#searchBtn,
+#addBtn,
+#removeBtn {
+    -fx-font-family: "Marker";
+    -fx-font-size: 20;
+    -fx-text-fill: #338741;
+    -fx-border-color: #338741;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: null;
+    -fx-border-width: 3;
+}
+
+
+#searchBtn:hover,
+#addBtn:hover,
+#removeBtn:hover {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+#searchBtn:pressed,
+#addBtn:pressed,
+#removeBtn:pressed {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+    -fx-scale-y: 0.99;
+    -fx-scale-x: 0.99;
+}
+
+#searchBtn:focused,
+#addBtn:focused,
+#removeBtn:focused {
+    -fx-border-color: #338741;
+    -fx-text-fill: #338741;
+}
+
+#searchBtn:hover:focused,
+#addBtn:hover:focused,
+#removeBtn: focused {
+    -fx-border-color: #61b73a;
+    -fx-text-fill: #61b73a;
+}
+
+
+#friendsScroll .viewport,
+#changesScroll .viewport {
+    -fx-background-color: transparent;
+}
+
+#friendsScroll,
+#changesScroll {
+    -fx-background-color: transparent;
+    -fx-border-color: #61b73a;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-width: 3;
+}
+
+#friendsScroll .thumb,
+#changesScroll .thumb {
+    -fx-background-color: #61b73a;
+    -fx-background-radius: 5em;
+}
+
+#friendsScroll .increment-button,
+#friendsScroll .decrement-button,
+#changesScroll .increment-button,
+#changesScroll .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#friendsScroll .track,
+#changesScroll .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 10;
+}
+
+#lblname,
+#lbldateofbirth,
+#lblscore {
+
+    -fx-text-fill: #61b73a;
+}

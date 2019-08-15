@@ -1,0 +1,62 @@
+#walking {
+    -fx-background-image: url(../images/walking.jpg);
+}
+
+#walking:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#cycling {
+    -fx-background-image: url(../images/cycling.jpg);
+}
+
+#cycling:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#publictransport {
+    -fx-background-image: url(../images/publictransport.jpg);
+}
+
+#publictransport:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#driving {
+    -fx-background-image: url(../images/driving.jpg);
+}
+
+#driving:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#flight {
+    -fx-background-image: url(../images/flight.jpg);
+}
+
+#flight:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#profileBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/profile_white_50.png');
+}
+
+#profileBtn:hover {
+    -fx-background-image: url('../images/profile_green_50.png');
+}
+
+#homeBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/home_white_50.png');
+}
+
+#homeBtn:hover {
+    -fx-background-image: url('../images/home_green_50.png');
+}

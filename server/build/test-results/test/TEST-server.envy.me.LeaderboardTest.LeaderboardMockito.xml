@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="server.envy.me.LeaderboardTest.LeaderboardMockito" tests="11" skipped="0" failures="0" errors="0" timestamp="2019-04-14T20:59:02" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.336">
+  <properties/>
+  <testcase name="testValidUsernameWithNoFriends" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.03"/>
+  <testcase name="testValidUsernameWithFriends" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.027"/>
+  <testcase name="testUpdateValidUser" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.027"/>
+  <testcase name="testGetScoreNullUser" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.027"/>
+  <testcase name="testGetEmptyLeaderboard" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.029"/>
+  <testcase name="testUpdateLeaderboardInvalidUser" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.029"/>
+  <testcase name="testValidUsernameWithFriendsCheckPositive" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.029"/>
+  <testcase name="testGetScoreUserNotNull" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.028"/>
+  <testcase name="testGetLeaderboardNegativeComparator" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.022"/>
+  <testcase name="testGetLeaderboardPositiveComparator" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.036"/>
+  <testcase name="testUsernameNull" classname="server.envy.me.LeaderboardTest.LeaderboardMockito" time="0.029"/>
+  <system-out><![CDATA[2019-04-14 22:59:02.743  INFO 17085 --- [    Test worker] o.s.t.c.s.DefaultTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [server.envy.me.LeaderboardTest.LeaderboardMockito], using DelegatingSmartContextLoader
+2019-04-14 22:59:02.743  INFO 17085 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [server.envy.me.LeaderboardTest.LeaderboardMockito]: no resource found for suffixes {-context.xml}.
+2019-04-14 22:59:02.744  INFO 17085 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [server.envy.me.LeaderboardTest.LeaderboardMockito]: LeaderboardMockito does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2019-04-14 22:59:02.745  INFO 17085 --- [    Test worker] o.s.t.c.s.DefaultTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2019-04-14 22:59:02.746  INFO 17085 --- [    Test worker] o.s.t.c.s.DefaultTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1bb63957, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3f098c54, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@27db0649, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4b52a303, org.springframework.test.context.support.DirtiesContextTestExecutionListener@610457bf, org.springframework.test.context.transaction.TransactionalTestExecutionListener@129c1ce7, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6d0aa9b3, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@339e45aa, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@706455c9, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@26d0406, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3a9272c9, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@7be0c324]
+2019-04-14 22:59:02.821  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:02.822  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:02.822  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2019-04-14 22:59:02.853  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:02.853  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:02.853  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+user1
+2019-04-14 22:59:02.884  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:02.884  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:02.884  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2019-04-14 22:59:02.911  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:02.911  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:02.911  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2019-04-14 22:59:02.943  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:02.944  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:02.944  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2019-04-14 22:59:02.973  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:02.973  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:02.974  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2019-04-14 22:59:03.003  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:03.003  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:03.003  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+user2
+2019-04-14 22:59:03.038  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:03.038  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:03.038  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2019-04-14 22:59:03.062  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:03.062  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:03.062  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2019-04-14 22:59:03.101  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:03.101  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:03.101  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2019-04-14 22:59:03.128  INFO 17085 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2019-04-14 22:59:03.128  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-04-14 22:59:03.129  INFO 17085 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

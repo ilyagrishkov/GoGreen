@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InitSurveyClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server.envy.me.initsurvey</a> &gt; <span class="el_source">InitSurveyClass.java</span></div><h1>InitSurveyClass.java</h1><pre class="source lang-java linenums">package server.envy.me.initsurvey;
+
+/**
+ * Class for the initial survey.
+ */
+public class InitSurveyClass {
+    /**
+     * Username belonging to the survey.
+     */
+    private static String username;
+
+    /**
+     * Users type of car. Electric, Diesel, or Gas.
+     */
+    private static String carType;
+
+    /**
+     * User's electricity bill price.
+     */
+    private static String elecbill;
+
+    /**
+     * User's gas bill price.
+     */
+    private static String gasBill;
+
+    /**
+     * User's usual meal composition.
+     */
+    private static String mealComp;
+
+    /**
+     * Number of people in User's household.
+     */
+    private static int nbofPeople;
+
+    /**
+     * Initial Survey Class constructor.
+     *
+     * @param username User's username.
+     * @param carType user's car type.
+     * @param elecbill user's electricity bill price.
+     * @param gasbill user's gas bill price.
+     * @param nbofPeople number of people in user's household.
+     * @param mealComp user's usual meal composition.
+     */
+    public InitSurveyClass(String username, String carType, String elecbill,
+<span class="nc" id="L48">                           String gasbill, int nbofPeople, String mealComp) {</span>
+<span class="nc" id="L49">        this.username = username;</span>
+<span class="nc" id="L50">        this.carType = carType;</span>
+<span class="nc" id="L51">        this.elecbill = elecbill;</span>
+<span class="nc" id="L52">        this.gasBill = gasbill;</span>
+<span class="nc" id="L53">        this.nbofPeople = nbofPeople;</span>
+<span class="nc" id="L54">        this.mealComp = mealComp;</span>
+<span class="nc" id="L55">    }</span>
+
+    /**
+     * For Deserialization purposes.
+     */
+<span class="nc" id="L60">    public InitSurveyClass() {</span>
+<span class="nc" id="L61">    }</span>
+
+    public static String getUsername() {
+<span class="nc" id="L64">        return username;</span>
+    }
+
+    public static void setUsername(String username) {
+<span class="nc" id="L68">        InitSurveyClass.username = username;</span>
+<span class="nc" id="L69">    }</span>
+
+    public static String getCarType() {
+<span class="nc" id="L72">        return carType;</span>
+    }
+
+    public static void setCarType(String carType) {
+<span class="nc" id="L76">        InitSurveyClass.carType = carType;</span>
+<span class="nc" id="L77">    }</span>
+
+    public static String getElecBill() {
+<span class="nc" id="L80">        return elecbill;</span>
+    }
+
+    public static void setElecBill(String elecBill) {
+<span class="nc" id="L84">        InitSurveyClass.elecbill = elecBill;</span>
+<span class="nc" id="L85">    }</span>
+
+    public static String getGasBill() {
+<span class="nc" id="L88">        return gasBill;</span>
+    }
+
+    public static void setGasBill(String gasBill) {
+<span class="nc" id="L92">        InitSurveyClass.gasBill = gasBill;</span>
+<span class="nc" id="L93">    }</span>
+
+    public static String getMealComp() {
+<span class="nc" id="L96">        return mealComp;</span>
+    }
+
+    public static void setMealComp(String mealComp) {
+<span class="nc" id="L100">        InitSurveyClass.mealComp = mealComp;</span>
+<span class="nc" id="L101">    }</span>
+
+    public static int getNbofPeople() {
+<span class="nc" id="L104">        return nbofPeople;</span>
+    }
+
+    public static void setNbofPeople(int nbofPeople) {
+<span class="nc" id="L108">        InitSurveyClass.nbofPeople = nbofPeople;</span>
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Brings this class to a readable format.
+     *
+     * @return toString of the InitSurveyClass
+     */
+    public String toString() {
+<span class="nc" id="L117">        return &quot;INIT SURVEY: &quot; + getUsername() + &quot; : &quot;</span>
+<span class="nc" id="L118">                + getCarType() + &quot; : &quot;</span>
+<span class="nc" id="L119">                + getElecBill() + &quot; : &quot;</span>
+<span class="nc" id="L120">                + getGasBill() + &quot; : &quot;</span>
+<span class="nc" id="L121">                + getNbofPeople() + &quot; : &quot;</span>
+<span class="nc" id="L122">                + getMealComp();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

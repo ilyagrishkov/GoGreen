@@ -1,0 +1,73 @@
+@font-face {
+    src: url('fonts/MarkerThin.ttf');
+}
+
+* {
+    -fx-font-family: "Marker";
+}
+
+#transportationButton,
+#foodButton,
+#utilitiesButton {
+
+    -fx-background-color: null;
+    -fx-font-size: 50;
+}
+
+#profileBtn {
+    -fx-background-color: null;
+    -fx-background-image: url('../images/profile_white_50.png');
+}
+
+#profileBtn:hover {
+    -fx-background-image: url('../images/profile_green_50.png');
+}
+
+#profileBtn:pressed {
+    -fx-background-image: url('../images/profile_green_50.png');
+    -fx-scale-y: 0.95;
+    -fx-scale-x: 0.95;
+}
+
+#mainPane {
+    -fx-background-image: url('../images/mainWindow.jpg');
+    -fx-background-size: cover;
+}
+
+#transportationButton:hover,
+#foodButton:hover,
+#utilitiesButton:hover {
+
+    -fx-text-fill: green;
+}
+
+#transportationButton:pressed,
+#foodButton:pressed,
+#utilitiesButton:pressed {
+
+    -fx-scale-y: 0.98;
+    -fx-scale-x: 0.98;
+}
+
+
+#closeBtn {
+    -fx-background-image: url("../images/closeButton.png");
+    -fx-background-repeat: no-repeat;
+    -fx-backgound-size: cover;
+    -fx-background-color: null;
+}
+
+#lblYourScore {
+    -fx-font-size: 40;
+    -fx-text-fill: green;
+}
+
+#score {
+    -fx-font-size: 50;
+    -fx-text-fill: #61b73a;
+}
+
+#lblDetails {
+    -fx-font-size: 25;
+    -fx-text-fill: green;
+}

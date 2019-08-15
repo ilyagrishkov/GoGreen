@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarDetails.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.source.html" class="el_package">oop.details</a> &gt; <span class="el_source">CarDetails.java</span></div><h1>CarDetails.java</h1><pre class="source lang-java linenums">package oop.details;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class CarDetails {
+
+    private int carId;
+    private int userId;
+    private String type;
+    private double mpg;
+    private String name;
+
+    /**
+     * Simple constructor for CarDetails.
+     *
+     * @param type Car type
+     * @param mpg  Miles per gallon
+     * @param name Name of the car
+     */
+<span class="fc" id="L28">    public CarDetails(String type, double mpg, String name) {</span>
+
+<span class="fc" id="L30">        this.setType(type);</span>
+<span class="fc" id="L31">        this.setMpg(mpg);</span>
+<span class="fc" id="L32">        this.setName(name);</span>
+<span class="fc" id="L33">    }</span>
+
+    /**
+     * Complex constructor for CarDetails.
+     *
+     * @param carId  The id of the car, as stored in the database
+     * @param userId The id of the user owning the car
+     * @param type   The type of the car
+     * @param mpg    Miles per gallon
+     * @param name   Name of the car
+     */
+<span class="fc" id="L44">    public CarDetails(int carId, int userId, String type, double mpg, String name) {</span>
+
+<span class="fc" id="L46">        this.setCarId(carId);</span>
+<span class="fc" id="L47">        this.setUserId(userId);</span>
+<span class="fc" id="L48">        this.setType(type);</span>
+<span class="fc" id="L49">        this.setMpg(mpg);</span>
+<span class="fc" id="L50">        this.setName(name);</span>
+
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Parse a json containing car data.
+     *
+     * @param json JSON to parse
+     * @return An ArrayList containing the data
+     */
+    public static ArrayList&lt;CarDetails&gt; parse(String json) {
+
+<span class="fc" id="L62">        json = &quot;{\&quot;cars\&quot;:&quot; + json + &quot;}&quot;;</span>
+
+<span class="fc" id="L64">        JsonElement jsonElement = new JsonParser().parse(json);</span>
+<span class="fc" id="L65">        JsonObject jsonObject = jsonElement.getAsJsonObject();</span>
+<span class="fc" id="L66">        JsonArray jsonArray = jsonObject.getAsJsonArray(&quot;cars&quot;);</span>
+
+<span class="fc" id="L68">        ArrayList&lt;CarDetails&gt; carDetails = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (int i = 0; i &lt; jsonArray.size(); i++) {</span>
+
+<span class="fc" id="L72">            CarDetails carDetails1 = new CarDetails(</span>
+<span class="fc" id="L73">                    jsonArray.get(i).getAsJsonObject().get(&quot;id&quot;).getAsInt(),</span>
+<span class="fc" id="L74">                    jsonArray.get(i).getAsJsonObject().get(&quot;userid&quot;).getAsInt(),</span>
+<span class="fc" id="L75">                    jsonArray.get(i).getAsJsonObject().get(&quot;type&quot;).getAsString(),</span>
+<span class="fc" id="L76">                    jsonArray.get(i).getAsJsonObject().get(&quot;mpg&quot;).getAsDouble(),</span>
+<span class="fc" id="L77">                    jsonArray.get(i).getAsJsonObject().get(&quot;name&quot;).getAsString()</span>
+            );
+
+<span class="fc" id="L80">            carDetails.add(carDetails1);</span>
+        }
+
+<span class="fc" id="L83">        return carDetails;</span>
+    }
+
+    public int getCarId() {
+<span class="fc" id="L87">        return carId;</span>
+    }
+
+    public void setCarId(int carId) {
+<span class="fc" id="L91">        this.carId = carId;</span>
+<span class="fc" id="L92">    }</span>
+
+    public int getUserId() {
+<span class="fc" id="L95">        return userId;</span>
+    }
+
+    public void setUserId(int userId) {
+<span class="fc" id="L99">        this.userId = userId;</span>
+<span class="fc" id="L100">    }</span>
+
+    public String getType() {
+<span class="fc" id="L103">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="fc" id="L107">        this.type = type;</span>
+<span class="fc" id="L108">    }</span>
+
+    public double getMpg() {
+<span class="fc" id="L111">        return mpg;</span>
+    }
+
+    public void setMpg(double mpg) {
+<span class="fc" id="L115">        this.mpg = mpg;</span>
+<span class="fc" id="L116">    }</span>
+
+    public String getName() {
+<span class="fc" id="L119">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L123">        this.name = name;</span>
+<span class="fc" id="L124">    }</span>
+
+    /**
+     * Equals method to compare an object to this.
+     *
+     * @param other The object to compare
+     * @return True if the other object is the same as this one, false otherwise
+     */
+    public boolean equals(Object other) {
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (other == null) {</span>
+<span class="fc" id="L135">            return false;</span>
+        }
+
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (other instanceof CarDetails) {</span>
+
+<span class="fc" id="L140">            CarDetails that = (CarDetails) other;</span>
+
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            return that.getCarId() == this.getCarId()</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">                    &amp;&amp; that.getMpg() == this.getMpg()</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                    &amp;&amp; that.getType().equals(this.getType())</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                    &amp;&amp; that.getUserId() == this.getUserId()</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">                    &amp;&amp; that.getName().equals(this.getName());</span>
+
+        }
+
+<span class="fc" id="L150">        return false;</span>
+    }
+
+    /**
+     * JSONifying the class, to faciliate sending to Server.
+     *
+     * @return a JSON string
+     */
+    public String stringify() {
+<span class="fc" id="L159">        Gson gson = new Gson();</span>
+
+<span class="fc" id="L161">        Map jsonMap = new HashMap();</span>
+
+<span class="fc" id="L163">        jsonMap.put(&quot;userid&quot;, getUserId());</span>
+<span class="fc" id="L164">        jsonMap.put(&quot;type&quot;, getType());</span>
+<span class="fc" id="L165">        jsonMap.put(&quot;mpg&quot;, getMpg());</span>
+<span class="fc" id="L166">        jsonMap.put(&quot;name&quot;, getName());</span>
+
+<span class="fc" id="L168">        String message = gson.toJson(jsonMap);</span>
+<span class="fc" id="L169">        System.out.println(message);</span>
+
+<span class="fc" id="L171">        return message;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

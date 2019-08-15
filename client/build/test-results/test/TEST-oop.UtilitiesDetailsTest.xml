@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.UtilitiesDetailsTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:15:00" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.005">
+  <properties/>
+  <testcase name="parseTest" classname="oop.UtilitiesDetailsTest" time="0.001"/>
+  <testcase name="failedStringifyTest" classname="oop.UtilitiesDetailsTest" time="0.001"/>
+  <testcase name="failedParseTest" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <testcase name="stringifyTest" classname="oop.UtilitiesDetailsTest" time="0.001"/>
+  <testcase name="setNatGas" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <testcase name="setsolarPanel" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <testcase name="setclean" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <testcase name="setwater" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <testcase name="setroomtemp" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <testcase name="setDate" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <testcase name="setelec" classname="oop.UtilitiesDetailsTest" time="0.0"/>
+  <system-out><![CDATA[{"electricityBill":10,"roomTemp":10,"cleanEnergyPercentage":10,"watersewage":10,"solarPanels":true,"natgas":10}
+{"electricityBill":10,"roomTemp":10,"cleanEnergyPercentage":10,"watersewage":10,"solarPanels":true,"natgas":10}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

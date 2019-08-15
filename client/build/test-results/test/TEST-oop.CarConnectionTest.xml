@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.CarConnectionTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:14:59" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.054">
+  <properties/>
+  <testcase name="test_send_car_validCorrectUsername" classname="oop.CarConnectionTest" time="0.008"/>
+  <testcase name="test_send_car_invalidUsername" classname="oop.CarConnectionTest" time="0.004"/>
+  <testcase name="test_delete_car_IOException" classname="oop.CarConnectionTest" time="0.008"/>
+  <testcase name="test_receiveCar_invalid" classname="oop.CarConnectionTest" time="0.004"/>
+  <testcase name="test_receiveCar_IOException" classname="oop.CarConnectionTest" time="0.003"/>
+  <testcase name="test_send_car_IOException" classname="oop.CarConnectionTest" time="0.004"/>
+  <testcase name="test_receiveCar_null" classname="oop.CarConnectionTest" time="0.004"/>
+  <testcase name="test_delete_car_invalidUsername" classname="oop.CarConnectionTest" time="0.004"/>
+  <testcase name="test_delete_car_validFalseId" classname="oop.CarConnectionTest" time="0.005"/>
+  <testcase name="test_receiveCar_valid" classname="oop.CarConnectionTest" time="0.004"/>
+  <testcase name="test_send_car_validFalseUsername" classname="oop.CarConnectionTest" time="0.004"/>
+  <system-out><![CDATA[{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+[{"mpg":4,"name":"name","id":1,"type":"Diesel Car","userid":2}]
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+{"mpg":4.0,"name":"name","type":"Diesel Car","userid":2}
+]]></system-out>
+  <system-err><![CDATA[Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.Connection: Successful Posting to Server - Sending Car
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+WARNING: oop.connection.Connection: User Not logged In
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+WARNING: oop.connection.Connection: IOException - POST to Server - Deleting Car
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+WARNING: oop.connection.Connection: IOException - GET to Server - Retrieving CarList
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+WARNING: oop.connection.Connection: IOException - POST to Server - Sending Car
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.Connection: Unsuccessful Posting to Server - Deleting Car
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.Connection: Unsuccessful Posting to Server - Deleting Car
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.HttpRequest: Creating HttpRequest Object
+Apr 14, 2019 8:14:59 PM oop.App log
+INFO: oop.connection.Connection: Unsuccessful Posting to Server - Sending Car
+]]></system-err>
+</testsuite>

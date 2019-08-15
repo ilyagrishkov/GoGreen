@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="oop.FoodDetailsTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2019-04-14T18:15:00" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.009">
+  <properties/>
+  <testcase name="setToZeroPositiveTest_poultry" classname="oop.FoodDetailsTest" time="0.002"/>
+  <testcase name="setToZeroNegativeTest" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="setToZeroPositiveTest_Dairy" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="setToZeroPositiveTest_Other" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="wrongDateTest" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="setToZeroPositiveTest_Beef" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="setToZeroPositiveTest_Fish" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="constructorTestValues" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="setToZeroPositiveTest_Fruits" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="setToZeroPositiveTest_Grains" classname="oop.FoodDetailsTest" time="0.001"/>
+  <testcase name="correctDateTest" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="setToZeroPositiveTest_Snacks" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="negativeJsonifying" classname="oop.FoodDetailsTest" time="0.0"/>
+  <testcase name="positiveJsonifying" classname="oop.FoodDetailsTest" time="0.001"/>
+  <system-out><![CDATA[{"date":"2019-04-14","eggs":0,"meatAlt":0,"cooked":false,"fish":0,"meat":0,"type":"Vegetarian","veggies":10,"snacks":0,"dairy":30,"local":false,"grains":40}
+{"date":"2019-04-14","eggs":0,"meatAlt":0,"cooked":false,"fish":0,"meat":0,"type":"Vegetarian","veggies":10,"snacks":0,"dairy":30,"local":false,"grains":40}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

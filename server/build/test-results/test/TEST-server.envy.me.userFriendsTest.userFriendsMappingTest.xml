@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="server.envy.me.userFriendsTest.userFriendsMappingTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2019-04-14T20:59:03" hostname="Ilyas-MBP.Stieltjesweg.duwo.lan" time="0.002">
+  <properties/>
+  <testcase name="setUserId1Positive" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="setUserId1Negative" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="getUserId2Positive" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="getUserId2Negative" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="setUserId2Positive" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="setUserId2Negative" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="getUserId1Positive" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="getUserId1Negative" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <testcase name="testConstructor" classname="server.envy.me.userFriendsTest.userFriendsMappingTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

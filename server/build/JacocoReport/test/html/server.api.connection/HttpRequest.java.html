@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server.api.connection</a> &gt; <span class="el_source">HttpRequest.java</span></div><h1>HttpRequest.java</h1><pre class="source lang-java linenums">package server.api.connection;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+/** Class that creates and sends Http requests.
+ *
+ */
+public class HttpRequest {
+
+    /** Default user agent.
+     *
+     */
+    private static final String USER_AGENT = &quot;Mozilla/5.0&quot;;
+
+    /** The URL where the HTTPRequest should be sent.
+     *
+     */
+    private URL obj;
+
+    /** The connection that is sent.
+     *
+     */
+    private HttpURLConnection con;
+
+<span class="fc" id="L29">    private String appId = &quot;eae01f78&quot;;</span>
+
+<span class="fc" id="L31">    private String appKey = &quot;2a2adbb4e8b58b4d94ed8d1c93f79356&quot;;</span>
+
+    /** Initializes the HTTP request and writes the headers.
+     *
+     * @param url the server URL to connect to
+     * @throws IOException Covers MalformedURLException, IOException,
+     *                     ProtocolException
+     */
+<span class="fc" id="L39">    public HttpRequest(final String url) throws IOException {</span>
+<span class="fc" id="L40">        obj = new URL(url);</span>
+<span class="fc" id="L41">        con = (HttpURLConnection) obj.openConnection();</span>
+<span class="fc" id="L42">    }</span>
+
+    /** Method that sends a GET request to web server.
+     *
+     * @return an HttpData containing the response message
+     * @throws IOException in case something goes wrong
+     */
+    public HttpData sendGet() throws IOException {
+
+        // Prepare connection for GET request
+<span class="fc" id="L52">        con.setRequestMethod(&quot;GET&quot;);</span>
+<span class="fc" id="L53">        con.setRequestProperty(&quot;User-Agent&quot;, USER_AGENT);</span>
+<span class="fc" id="L54">        con.setRequestProperty(&quot;app_id&quot;, appId);</span>
+<span class="fc" id="L55">        con.setRequestProperty(&quot;app_key&quot;, appKey);</span>
+
+<span class="fc" id="L57">        System.out.println(&quot;\nSending 'GET' request to URL : &quot; + con.getURL());</span>
+
+<span class="fc" id="L59">        BufferedReader in = new BufferedReader(</span>
+<span class="fc" id="L60">                new InputStreamReader(con.getInputStream()));</span>
+        String inputLine;
+<span class="fc" id="L62">        StringBuffer response = new StringBuffer();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        while ((inputLine = in.readLine()) != null) {</span>
+<span class="fc" id="L64">            response.append(inputLine);</span>
+        }
+<span class="fc" id="L66">        in.close();</span>
+
+<span class="fc" id="L68">        int responseCode = con.getResponseCode();</span>
+
+<span class="fc" id="L70">        return new HttpData(responseCode, response.toString());</span>
+
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

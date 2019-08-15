@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Validator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">client</a> &gt; <a href="index.source.html" class="el_package">oop.validators</a> &gt; <span class="el_source">Validator.java</span></div><h1>Validator.java</h1><pre class="source lang-java linenums">package oop.validators;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+<span class="nc" id="L7">public abstract class Validator {</span>
+
+    /**
+     * Checks if name in given TextField value matches regular expression.
+     *
+     * @param userInput text to check
+     * @return -  return true, if pattern matches
+     */
+    public static final boolean validateUserName(final String userInput) {
+
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        return userInput != null &amp;&amp; userInput</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">                .matches(&quot;^[a-zA-Z0-9._-]{3,}$&quot;);</span>
+    }
+
+    /**
+     * Checks if name in given TextField value matches regular expression.
+     *
+     * @param userInput text to check
+     * @return -  return true, if pattern matches
+     */
+    public static final boolean validatePassword(final String userInput) {
+
+<span class="fc bfc" id="L29" title="All 4 branches covered.">        return userInput != null &amp;&amp; userInput.matches(</span>
+                &quot;^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=&quot;
+                        + &quot;.*([^a-zA-Z\\d\\s])).{9,}$&quot;);
+    }
+
+
+    /**
+     * Hashes given string using SHA256.
+     *
+     * @param textToHash - text to hash
+     * @return - returns hashed string
+     */
+    public static String hashWith256(String textToHash) {
+        try {
+
+<span class="fc" id="L44">            MessageDigest md = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+
+<span class="fc" id="L46">            byte[] messageDigest = md.digest(textToHash.getBytes());</span>
+
+<span class="fc" id="L48">            BigInteger no = new BigInteger(1, messageDigest);</span>
+
+<span class="fc" id="L50">            String hashtext = no.toString(16);</span>
+
+
+<span class="fc" id="L53">            return hashtext;</span>
+
+<span class="nc" id="L55">        } catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L56">            System.out.println(&quot;Exception thrown&quot;</span>
+                    + &quot; for incorrect algorithm: &quot; + e);
+
+<span class="nc" id="L59">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

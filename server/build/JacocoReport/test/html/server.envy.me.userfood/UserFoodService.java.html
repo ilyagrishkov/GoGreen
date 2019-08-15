@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserFoodService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">server</a> &gt; <a href="index.source.html" class="el_package">server.envy.me.userfood</a> &gt; <span class="el_source">UserFoodService.java</span></div><h1>UserFoodService.java</h1><pre class="source lang-java linenums">package server.envy.me.userfood;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+<span class="fc" id="L10">public class UserFoodService {</span>
+
+    @Autowired
+    private UserFoodRepository userFoodRepository;
+
+    /**
+     * Find UserFoodClass by foodId.
+     * @param foodId to find the instance
+     * @return instance of the class
+     */
+    private UserFoodClass getByFoodId(int foodId) {
+<span class="nc" id="L21">        return userFoodRepository.findByFoodId(foodId);</span>
+    }
+
+    /**
+     * Returns a list of UserFoodClass object with all the food recorded.
+     * by user with id : userId
+     * @param userId of the user
+     * @return List of food mappings
+     */
+    public List&lt;UserFoodClass&gt; getListFoodByUserId(int userId) {
+<span class="fc" id="L31">        List&lt;UserFoodClass&gt; allFoodUser = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for (UserFoodClass s : userFoodRepository.findAll()) {</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (s.getUserId() == userId) {</span>
+<span class="fc" id="L34">                allFoodUser.add(s);</span>
+            }
+<span class="fc" id="L36">        }</span>
+<span class="fc" id="L37">        return allFoodUser;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
