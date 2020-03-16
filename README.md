@@ -4,13 +4,13 @@
 
 ## <div align="center"> OVERVIEW </div>
 Our application aims to encourage people to change their lifestyle by allowing them to track their **CO2 consumption**. They can **add friends** and **compare their carbon footprint**, while also receiving **achievements and badges** for certain milestones, such as eating 250 vegan meals. The application stores each user’s data on a **secure database**, which can only be accessed through our server, so each user’s information is safely stored.
-<hr>
- <br/><br/>
+
+<br/><br/>
 
  ## <div align="center"> TEAM MEMBERS </div>
  **<div align="center"> Ilya Grishkov &emsp;&emsp; Edoardo Lanzini &emsp;&emsp; Marin Duroyon &emsp;&emsp; Razvan Hilea</div>**
  
-<hr>
+
 <br/><br/>
 
 ## <div align="center"> BUILT WITH </div>
@@ -34,7 +34,7 @@ Our application aims to encourage people to change their lifestyle by allowing t
  Postgres <br/>
 </div>
 
-<hr>
+
 <br/><br/>
 
 ## <div align="center"> FEATURES </div>
